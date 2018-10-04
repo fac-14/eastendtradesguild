@@ -43,7 +43,7 @@ module.exports = (req, res, next) => {
             postcodes
                 .lookup(postcode)
                 .then(function (postcode) {
-                    console.log(postcode);
+                    console.log('longitude: ', postcode.longitude, 'latitutde: ', postcode.latitude);
                 }, function (error) {
                     next(error);
                 });
