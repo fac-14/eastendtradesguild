@@ -35,6 +35,11 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+client/node_modules
+client/jspm_packages
+
+# production
+/client/build
 
 # TypeScript v1 declaration files
 typings/
@@ -59,3 +64,6 @@ typings/
 
 # next.js build output
 .next
+
+# .DS_Store
+.DS_Store
