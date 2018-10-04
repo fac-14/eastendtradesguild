@@ -1,12 +1,11 @@
 const express = require('express');
 const path = require('path');
+const controllers = require('./controllers/index');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
+app.use(controllers);
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
