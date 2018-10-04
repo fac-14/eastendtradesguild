@@ -10,7 +10,6 @@
     "test": "cd client && npm test"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
     "express": "^4.16.2"
   },
   "devDependencies": {
