@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/fac-14/eastendtradesguild#readme",
   "dependencies": {
+    "airtable": "^0.5.6",
     "express": "^4.16.3"
   },
   "devDependencies": {

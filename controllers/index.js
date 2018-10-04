@@ -1,13 +1,14 @@
 const express = require('express');
 const hello = require('./hello');
 const error = require('./error');
-
+const airtable  = require('./airtable')
 const router = express.Router();
 
 // require different handlers from this folder
 // e.g. const landing = require("./landing");
 
 router.get('/api/hello', hello);
+router.get('/api/airtable', airtable)
 
 console.log('Node ENV is: ', process.env.NODE_ENV);
 
