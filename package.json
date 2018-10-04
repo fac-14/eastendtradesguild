@@ -7,12 +7,20 @@
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
-    "test": "cd client && npm test"
+    "test": "npm run test:server && cd client && npm test",
+    "test:server": "jest"
   },
   "dependencies": {
     "express": "^4.16.2"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0"
+    "concurrently": "^3.5.0",
+    "jest": "^23.6.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/client/"
+    ]
   }
 }

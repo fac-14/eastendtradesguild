@@ -6,9 +6,11 @@ const router = express();
 
 router.get('/api/hello', hello);
 
-// TODO restrict to test environment only - test that error handling is operational
-const errorRoute = require('./error-route');
-router.get('/api/error', errorRoute);
+if (process.env.NODE_ENV !== 'production') {
+  // allows us to test that error handling is working, not needed in production
+  const errorRoute = require('./error-route');
+  router.get('/api/error', errorRoute);
+}
 
 // error handling will deal with next(err) in any controllers
 router.use(error.server);
