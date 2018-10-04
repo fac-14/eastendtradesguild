@@ -2,7 +2,7 @@
   "name": "eastendtradesguild",
   "version": "1.0.0",
   "description": "FAC 14 Client Project",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "cd client && npm t",
