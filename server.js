@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const controllers = require('./controllers/index');
-const error = require('./error');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -16,7 +15,5 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
-
-app.use(error.server);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
