@@ -7,11 +7,11 @@ class App extends Component {
     response: '',
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
       .catch(err => console.log(err));
-  };
+  }
 
   callApi = async () => {
     const response = await fetch('/api/hello');
@@ -21,22 +21,13 @@ class App extends Component {
 
     return body;
   };
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">{this.state.response}</p>
       </div>
