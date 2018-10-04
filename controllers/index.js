@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.get('/api/hello', hello);
 
+console.log('Node ENV is: ', process.env.NODE_ENV);
+
 // if in production mode, serve React files from static folder client/build
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
