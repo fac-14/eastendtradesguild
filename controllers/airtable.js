@@ -1,6 +1,8 @@
 // const https = require('https')
 // const querystring = require('querystring')
 const request = require('request')
+let storageUpdaterArr = [];
+let airtableArr = [];
 
 module.exports = (req, res, next) => {
 
@@ -13,7 +15,6 @@ module.exports = (req, res, next) => {
     var base = Airtable.base('apphdQNWTLdRQbOOg');
 
     // set up storageUpdaterArr array to be sent to
-    let storageUpdaterArr = [];
 
     // start query to update airtable view no_geolocation
     base('fonthilldummy').select({
@@ -72,8 +73,8 @@ module.exports = (req, res, next) => {
     },
         // set up api call to get airtable data
         base('fonthilldummy').select({
-            maxRecords: 1,
-            pageSize: 3,
+            maxRecords: 100,
+            pageSize: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
@@ -83,13 +84,13 @@ module.exports = (req, res, next) => {
                     postcode: record.fields.Postcode,
                     coordinates: record.fields.geolocation
                 }
-                // console.log(airtableObj);
+                airtableArr.push(airtableObj);
             })
             fetchNextPage();
         },
             function done(err) {
                 if (err) { console.error(err); next(err); }
-                res.send(airtableObj)
+                res.send({ ...airtableArr })
             }
         )
 
