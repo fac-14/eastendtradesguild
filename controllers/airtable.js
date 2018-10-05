@@ -3,7 +3,7 @@
 const request = require('request')
 
 module.exports = (req, res, next) => {
-    
+
     // set up airtable api
     var Airtable = require('airtable');
     Airtable.configure({
@@ -11,12 +11,12 @@ module.exports = (req, res, next) => {
         apiKey: 'keyYBKUirvMxeaey5'
     });
     var base = Airtable.base('apphdQNWTLdRQbOOg');
-    
+
     // set up storage array to be sent to frontend
     let storage = [];
-    
+
     // setup postcodesIO
-    
+
     var PostcodesIO = require('postcodesio-client');
     var postcodes = new PostcodesIO('https://api.postcodes.io', {
         headers: { 'User-Agent': 'MyAwesomeApp/1.0.0' } // default {} - extra headers
@@ -46,34 +46,30 @@ module.exports = (req, res, next) => {
                 return postcode.postcode
             })
         }
-       
+
         request.post('https://api.postcodes.io/postcodes', {
             json: postcodeObj,
-            
-        }, (error,res,body) => {
+
+        }, (error, res, body) => {
             if (error) {
                 // console.log(error)
                 next(error)
                 return
             }
             console.log(`statusCode: ${res.statusCode}`)
-            
-    
+
+
             for (let i = 0; i < body.result.length; i++) {
-                for(let j = i; j< storage.length; j++) {
-                    // console.log(storage[j].coordinates)
-                        storage[j].coordinates = {
-                           longitude: body.result[i].result.longitude,
-                           latitude: body.result[i].result.latitude,
-                       }
-                   
+                storage[i].coordinates = {
+                    lat: body.result[i].result.latitude,
+                    lng: body.result[i].result.longitude
                 }
             }
             console.log(storage)
             return storage;
 
         })
-        
+
         // To fetch the next page of records, call `fetchNextPage`.
         // If there are more records, `page` will get called again.
         // If there are no more records, `done` will get called.
