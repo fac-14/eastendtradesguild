@@ -10,7 +10,6 @@ module.exports = (req, res, next) => {
     let storage = [];
     // setup postcodesIO
     var PostcodesIO = require('postcodesio-client');
-
     var postcodes = new PostcodesIO('https://api.postcodes.io', {
         headers: { 'User-Agent': 'MyAwesomeApp/1.0.0' } // default {} - extra headers
     });
@@ -25,7 +24,8 @@ module.exports = (req, res, next) => {
         records.forEach(function (record) {
             postcodeIdObj = {
                 id: record.id,
-                postcode: record.fields.Postcode
+                postcode: record.fields.Postcode,
+                coordinates: {}
             }
             storage.push(postcodeIdObj)
         });
@@ -35,25 +35,40 @@ module.exports = (req, res, next) => {
         //         return postcode.postcode
         //     })
         // }
+
+        // create array of postcodes
         let postcodeArr = storage.map(postcode => {
             return postcode.postcode
         });
-        console.log(postcodeArr);
+
         postcodeArr.forEach(postcode => {
             postcodes
                 .lookup(postcode)
                 .then(function (postcode) {
-                    console.log('longitude: ', postcode.longitude, 'latitutde: ', postcode.latitude);
+                    coordinates = { lat: postcode.latitude, lng: postcode.longitude }
+                    postcodeIdObj.coordinates = coordinates;
+                    console.log(postcodeIdObj);
                 }, function (error) {
                     next(error);
                 });
         })
+
+
+        // base('fonthilldummy').update('recavzIUC1T3IT1uO', {
+        //     "Postcode": "N4 3HF"
+        //   }, function(err, record) {
+        //       if (err) { console.error(err); return; }
+        //       console.log(record.get('Postcode'));
+        //   });
+
 
         // To fetch the next page of records, call `fetchNextPage`.
         // If there are more records, `page` will get called again.
         // If there are no more records, `done` will get called.
         fetchNextPage();
     },
+
+
 
         function done(err) {
             if (err) { console.error(err); next(err); }
