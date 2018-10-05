@@ -1,4 +1,9 @@
+// const https = require('https')
+// const querystring = require('querystring')
+const request = require('request')
+
 module.exports = (req, res, next) => {
+    
     // set up airtable api
     var Airtable = require('airtable');
     Airtable.configure({
@@ -6,13 +11,17 @@ module.exports = (req, res, next) => {
         apiKey: 'keyYBKUirvMxeaey5'
     });
     var base = Airtable.base('apphdQNWTLdRQbOOg');
+    
     // set up storage array to be sent to frontend
     let storage = [];
+    
     // setup postcodesIO
+    
     var PostcodesIO = require('postcodesio-client');
     var postcodes = new PostcodesIO('https://api.postcodes.io', {
         headers: { 'User-Agent': 'MyAwesomeApp/1.0.0' } // default {} - extra headers
     });
+
     // start query
     base('fonthilldummy').select({
         // Selecting the first 3 records in Grid view:
@@ -21,7 +30,9 @@ module.exports = (req, res, next) => {
         view: "no_geolocation"
     }).eachPage(function page(records, fetchNextPage) {
         // This function (`page`) will get called for each page of records.
-        records.forEach(function (record) {
+        const airtableRecords = records
+
+        airtableRecords.forEach(function (record) {
             postcodeIdObj = {
                 id: record.id,
                 postcode: record.fields.Postcode,
@@ -30,38 +41,39 @@ module.exports = (req, res, next) => {
             storage.push(postcodeIdObj)
         });
         // create postcode object to be sent to geolocation api
-        // let postcodeObj = {
-        //     "postcodes": storage.map(postcode => {
-        //         return postcode.postcode
-        //     })
-        // }
+        let postcodeObj = {
+            "postcodes": storage.map(postcode => {
+                return postcode.postcode
+            })
+        }
+       
+        request.post('https://api.postcodes.io/postcodes', {
+            json: postcodeObj,
+            
+        }, (error,res,body) => {
+            if (error) {
+                // console.log(error)
+                next(error)
+                return
+            }
+            console.log(`statusCode: ${res.statusCode}`)
+            
+    
+            for (let i = 0; i < body.result.length; i++) {
+                for(let j = i; j< storage.length; j++) {
+                    // console.log(storage[j].coordinates)
+                        storage[j].coordinates = {
+                           longitude: body.result[i].result.longitude,
+                           latitude: body.result[i].result.latitude,
+                       }
+                   
+                }
+            }
+            console.log(storage)
+            return storage;
 
-        // create array of postcodes
-        let postcodeArr = storage.map(postcode => {
-            return postcode.postcode
-        });
-
-        postcodeArr.forEach(postcode => {
-            postcodes
-                .lookup(postcode)
-                .then(function (postcode) {
-                    coordinates = { lat: postcode.latitude, lng: postcode.longitude }
-                    postcodeIdObj.coordinates = coordinates;
-                    console.log(postcodeIdObj);
-                }, function (error) {
-                    next(error);
-                });
         })
-
-
-        // base('fonthilldummy').update('recavzIUC1T3IT1uO', {
-        //     "Postcode": "N4 3HF"
-        //   }, function(err, record) {
-        //       if (err) { console.error(err); return; }
-        //       console.log(record.get('Postcode'));
-        //   });
-
-
+        
         // To fetch the next page of records, call `fetchNextPage`.
         // If there are more records, `page` will get called again.
         // If there are no more records, `done` will get called.
