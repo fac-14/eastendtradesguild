@@ -52,7 +52,7 @@ module.exports = (req, res, next) => {
 
         }, (error, res, body) => {
             if (error) {
-                // console.log(error)
+                // connsole.log(error)
                 next(error)
                 return
             }
@@ -65,11 +65,25 @@ module.exports = (req, res, next) => {
                     lng: body.result[i].result.longitude
                 }
             }
-            console.log(storage)
-            return storage;
-
+            
+            // console.log(storage[0].coordinates)
+            for (let i = 0; i < storage.length; i++){
+                // console.log(storage.length)
+               
+                  base('fonthilldummy').update(storage[i].id, {
+                    'geolocation': JSON.stringify(storage[i].coordinates)
+                }, function(err,record) {
+                    if (err){console.log(err); return;}
+                    console.log(record.get('geolocation'));
+                });  
+                
+                 
+            }
+            
+            
+            
         })
-
+        
         // To fetch the next page of records, call `fetchNextPage`.
         // If there are more records, `page` will get called again.
         // If there are no more records, `done` will get called.
@@ -80,7 +94,7 @@ module.exports = (req, res, next) => {
 
         function done(err) {
             if (err) { console.error(err); next(err); }
-            res.send({ ...storage })
+            res.send({...storage})
 
         });
 
