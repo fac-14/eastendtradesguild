@@ -1,8 +1,4 @@
-// const https = require('https')
-// const querystring = require('querystring')
 const request = require('request')
-let storageUpdaterArr = [];
-let airtableArr = [];
 
 module.exports = (req, res, next) => {
 
@@ -15,6 +11,8 @@ module.exports = (req, res, next) => {
     var base = Airtable.base('apphdQNWTLdRQbOOg');
 
     // set up storageUpdaterArr array to be sent to
+    let storageUpdaterArr = [];
+    let airtableArr = [];
 
     // start query to update airtable view no_geolocation
     base('fonthilldummy').select({
@@ -28,17 +26,19 @@ module.exports = (req, res, next) => {
             // set up objet to be populated using postcodesIO and sent back to airtable
             postcodeIdObj = {
                 id: record.id,
-                postcode: record.fields.Postcode,
+                postcode: record.fields.postcode,
                 coordinates: {}
             }
             storageUpdaterArr.push(postcodeIdObj)
         });
+
         // create postcode object to be sent to geolocation api
         let postcodeObj = {
             "postcodes": storageUpdaterArr.map(postcode => {
                 return postcode.postcode
             })
         }
+
         request.post('https://api.postcodes.io/postcodes', {
             json: postcodeObj,
         }, (error, res, body) => {
@@ -56,6 +56,7 @@ module.exports = (req, res, next) => {
                     lng: body.result[i].result.longitude
                 }
             }
+
             // send coords and id to update no_geolocation view
             for (let i = 0; i < storageUpdaterArr.length; i++) {
                 base('fonthilldummy').update(storageUpdaterArr[i].id, {
@@ -81,9 +82,15 @@ module.exports = (req, res, next) => {
                 // set up objet to be populated using postcodesIO and sent back to airtable
                 airtableObj = {
                     id: record.id,
-                    postcode: record.fields.Postcode,
+                    name: record.fields.name,
+                    address: record.fields.address,
+                    priceSqrft: record.fields.price_sqft,
+                    useClass: record.fields.use_class,
+                    dateOfLastRentReview: record.fields.date_of_last_rent_review,
+                    postcode: record.fields.postcode,
                     coordinates: record.fields.geolocation
                 }
+
                 airtableArr.push(airtableObj);
             })
             fetchNextPage();
@@ -93,8 +100,5 @@ module.exports = (req, res, next) => {
                 res.send({ ...airtableArr })
             }
         )
-
-
     );
-
 }
