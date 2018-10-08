@@ -8,3 +8,7 @@ cache:
 install:
   - 'npm i -D'
   - 'npm run heroku-postbuild'
+script:
+  - 'npm run test:coverage'
+after_success:
+  - 'npm run coverage'
