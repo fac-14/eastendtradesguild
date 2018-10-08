@@ -11,8 +11,9 @@
   },
   "scripts": {
     "start": "node server.js",
+    "start:server": "nodemon server.js",
     "start:client": "react-scripts start",
-    "dev": "concurrently --kill-others-on-fail \"npm start\" \"npm run start:client\"",
+    "dev": "concurrently --kill-others-on-fail \"npm run start:server\" \"npm run start:client\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "npm test -- --coverage",
