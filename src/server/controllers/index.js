@@ -8,6 +8,6 @@ const router = express();
 router.get('/api/hello', hello);
 router.get('/api/error', errorRoute);
 
-//router.use(errorHandler);
+router.use(errorHandler);
 
 module.exports = router;
