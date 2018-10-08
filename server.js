@@ -16,4 +16,9 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// add error handling middleware for next(err)
+app.use((err, req, res, next) => {
+  res.status(500).send(`<h1>Server error: ${err.message}</h1>`);
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
