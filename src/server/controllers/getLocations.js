@@ -1,5 +1,5 @@
-const request = require('request');
-const { getNoGeo, updateGeo } = require('../models/airtable');
+const request = require("request");
+const { getNoGeo, updateGeo, getAllRows } = require("../models/airtable");
 
 module.exports = async (req, res, next) => {
   const rowsWithNoGeolocation = await getNoGeo();
@@ -7,8 +7,10 @@ module.exports = async (req, res, next) => {
     const response = await updateGeo(rowsWithNoGeolocation);
   }
   // if any rows had no geolocation, they have now been updated
-
   // request all rows from airtable
-
+  const locations = await getAllRows();
+  console.log("locations fetched");
+  res.send(locations);
+  // res.send(locations);
   // send all rows to client
 };

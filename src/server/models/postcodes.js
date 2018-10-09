@@ -1,13 +1,14 @@
-const request = require('request');
+const request = require("request");
 
 const makePostcodeArray = inputArray => inputArray.map(entry => entry.postcode);
 
 const getGeolocation = array =>
   new Promise((resolve, reject) => {
+    console.log(array);
     request.post(
-      'https://api.postcodes.io/postcodes',
+      "https://api.postcodes.io/postcodes",
       {
-        json: { postcodes: array },
+        json: { postcodes: array }
       },
       (error, res, body) => {
         if (error) {
@@ -22,7 +23,7 @@ const getGeolocation = array =>
 const makeLatLngArray = inputArray =>
   inputArray.map(entry => ({
     lat: entry.result.latitude,
-    lng: entry.result.longitude,
+    lng: entry.result.longitude
   }));
 
 module.exports = { makePostcodeArray, getGeolocation, makeLatLngArray };

@@ -1,41 +1,59 @@
-const Airtable = require('airtable');
+const Airtable = require("airtable");
 const {
   makePostcodeArray,
   getGeolocation,
-  makeLatLngArray,
-} = require('./postcodes');
+  makeLatLngArray
+} = require("./postcodes");
 
 Airtable.configure({
-  endpointUrl: 'https://api.airtable.com',
-  apiKey: 'keyYBKUirvMxeaey5',
+  endpointUrl: "https://api.airtable.com",
+  apiKey: "keyYBKUirvMxeaey5"
 });
 
-const base = Airtable.base('apphdQNWTLdRQbOOg');
+const base = Airtable.base("apphdQNWTLdRQbOOg");
 
 const getNoGeo = () =>
   new Promise((resolve, reject) => {
+    requestRows("no_geolocation", (array, record) => {
+      if (record.fields.postcode != null) {
+        const postcodeIdObj = {
+          id: record.id,
+          postcode: record.fields.postcode
+        };
+        array.push(postcodeIdObj);
+      }
+    }).then(resolve);
+  });
+
+const getAllRows = () =>
+  new Promise((resolve, reject) => {
+    requestRows("all_records", (array, record) => {
+      if (record.fields.postcode != null) {
+        array.push(record.fields);
+      }
+    }).then(resolve);
+  });
+
+const requestRows = (view, cb) =>
+  new Promise((resolve, reject) => {
     const outputArray = [];
-    base('fonthilldummy')
+    base("fonthilldummy")
       .select({
         maxRecords: 1000,
         pageSize: 100,
-        view: 'no_geolocation',
+        view
       })
       .eachPage(
         function page(records, fetchNextPage) {
           // This function (`page`) will get called for each page of records.
-          records.forEach(function(record) {
-            // set up objet to be populated using postcodesIO and sent back to airtable
-            postcodeIdObj = {
-              id: record.id,
-              postcode: record.fields.postcode,
-            };
-            outputArray.push(postcodeIdObj);
+          records.forEach(record => {
+            cb(outputArray, record);
           });
           fetchNextPage();
         },
         function done(err) {
           if (err) reject(err);
+          // console.log(outputArray);
           resolve(outputArray);
         }
       );
@@ -63,8 +81,8 @@ const joinWithIDs = (airtableResponse, postcodeResponse) =>
       updateArray[i] = {
         id: airtableResponse[i].id,
         fields: {
-          geolocation: JSON.stringify(postcodeResponse[i]),
-        },
+          geolocation: JSON.stringify(postcodeResponse[i])
+        }
       };
     }
     resolve(updateArray);
@@ -72,7 +90,7 @@ const joinWithIDs = (airtableResponse, postcodeResponse) =>
 
 const updateAirtable = (id, fields) =>
   new Promise((resolve, reject) => {
-    base('fonthilldummy').update(id, fields, function(err, record) {
+    base("fonthilldummy").update(id, fields, function(err, record) {
       if (err) {
         reject(err);
       }
@@ -111,4 +129,13 @@ const updateMany = array =>
 
 // }
 
-module.exports = { getNoGeo, updateGeo };
+module.exports = { getNoGeo, updateGeo, getAllRows };
+
+// function(record) {
+//   // set up objet to be populated using postcodesIO and sent back to airtable
+//   const postcodeIdObj = {
+//     id: record.id,
+//     postcode: record.fields.postcode,
+//   };
+//   array.push(postcodeIdObj);
+// }
