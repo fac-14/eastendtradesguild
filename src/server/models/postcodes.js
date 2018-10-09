@@ -2,13 +2,13 @@ const request = require("request");
 
 const makePostcodeArray = inputArray => inputArray.map(entry => entry.postcode);
 
-const getGeolocation = array =>
+const getGeolocation = (postcodeArray, results = []) =>
   new Promise((resolve, reject) => {
     // console.log(array);
     request.post(
       "https://api.postcodes.io/postcodes",
       {
-        json: { postcodes: array }
+        json: { postcodes: postcodeArray.slice(0, 100) }
       },
       (error, res, body) => {
         if (error) {
@@ -21,6 +21,7 @@ const getGeolocation = array =>
     );
   });
 
+//
 const makeLatLngArray = inputArray => {
   return inputArray.map(entry => {
     if (entry.result != null) {
