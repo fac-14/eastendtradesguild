@@ -4,7 +4,7 @@ const makePostcodeArray = inputArray => inputArray.map(entry => entry.postcode);
 
 const getGeolocation = array =>
   new Promise((resolve, reject) => {
-    console.log(array);
+    // console.log(array);
     request.post(
       "https://api.postcodes.io/postcodes",
       {
@@ -14,16 +14,23 @@ const getGeolocation = array =>
         if (error) {
           reject(error);
         } else {
+          // console.log(body.result);
           resolve(body.result);
         }
       }
     );
   });
 
-const makeLatLngArray = inputArray =>
-  inputArray.map(entry => ({
-    lat: entry.result.latitude,
-    lng: entry.result.longitude
-  }));
-
+const makeLatLngArray = inputArray => {
+  return inputArray.map(entry => {
+    if (entry.result != null) {
+      return {
+        lat: entry.result.latitude,
+        lng: entry.result.longitude
+      };
+    } else {
+      return "invalid";
+    }
+  });
+};
 module.exports = { makePostcodeArray, getGeolocation, makeLatLngArray };
