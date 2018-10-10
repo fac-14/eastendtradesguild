@@ -1,5 +1,5 @@
-const request = require("request");
-const { getNoGeo, updateGeo, getAllValidRows } = require("../models/airtable");
+const request = require('request');
+const { getNoGeo, updateGeo, getAllValidRows } = require('../models/table');
 
 module.exports = async (req, res, next) => {
   const rowsWithNoGeolocation = await getNoGeo();

@@ -1,24 +1,24 @@
-const Airtable = require("airtable");
+const Airtable = require('airtable');
 const {
   makePostcodeArray,
   getGeolocation,
-  makeLatLngArray
-} = require("./postcodes");
+  makeLatLngArray,
+} = require('./postcodes');
 
 Airtable.configure({
-  endpointUrl: "https://api.airtable.com",
-  apiKey: "keyYBKUirvMxeaey5"
+  endpointUrl: 'https://api.airtable.com',
+  apiKey: 'keyYBKUirvMxeaey5',
 });
 
-const base = Airtable.base("apphdQNWTLdRQbOOg");
+const base = Airtable.base('apphdQNWTLdRQbOOg');
 
 const getNoGeo = () =>
   new Promise((resolve, reject) => {
-    requestRows("no_geolocation", (array, record) => {
+    requestRows('no_geolocation', (array, record) => {
       //if (record.fields.postcode != null) {
       const postcodeIdObj = {
         id: record.id,
-        postcode: record.fields.postcode
+        postcode: record.fields.postcode,
       };
       array.push(postcodeIdObj);
       // }
@@ -32,8 +32,8 @@ const isValidRow = ({
     price_sqft,
     use_class,
     date_of_last_rent_review,
-    geolocation
-  }
+    geolocation,
+  },
 }) => {
   if (
     postcode &&
@@ -41,7 +41,7 @@ const isValidRow = ({
     price_sqft &&
     use_class &&
     date_of_last_rent_review &&
-    geolocation != "invalid"
+    geolocation != 'invalid'
   ) {
     return true;
   }
@@ -50,7 +50,7 @@ const isValidRow = ({
 
 const getAllValidRows = () =>
   new Promise((resolve, reject) => {
-    requestRows("valid_records", (array, record) => {
+    requestRows('valid_records', (array, record) => {
       if (isValidRow(record)) {
         array.push(record.fields);
       }
@@ -60,11 +60,11 @@ const getAllValidRows = () =>
 const requestRows = (view, cb) =>
   new Promise((resolve, reject) => {
     const outputArray = [];
-    base("fonthilldummy")
+    base('fonthilldummy')
       .select({
         maxRecords: 1000,
         pageSize: 100,
-        view
+        view,
       })
       .eachPage(
         function page(records, fetchNextPage) {
@@ -105,8 +105,8 @@ const joinWithIDs = (airtableResponse, postcodeResponse) =>
       updateArray[i] = {
         id: airtableResponse[i].id,
         fields: {
-          geolocation: JSON.stringify(postcodeResponse[i])
-        }
+          geolocation: JSON.stringify(postcodeResponse[i]),
+        },
       };
     }
     resolve(updateArray);
@@ -114,7 +114,7 @@ const joinWithIDs = (airtableResponse, postcodeResponse) =>
 
 const updateAirtable = (id, fields) =>
   new Promise((resolve, reject) => {
-    base("fonthilldummy").update(id, fields, function(err, record) {
+    base('fonthilldummy').update(id, fields, function(err, record) {
       if (err) {
         reject(err);
       }
@@ -128,38 +128,4 @@ const updateMany = array =>
     resolve(true);
   });
 
-// const getNoGeo = new (resolve, reject) => {
-//     const outputArray = []
-
-//     base('fonthilldummy').select({
-//         maxRecords: 1000,
-//         pageSize: 100,
-//         view: 'no_geolocation'
-//     }).eachPage(function page(records, fetchNextPage) {
-//         // This function (`page`) will get called for each page of records.
-//         records.forEach(function (record) {
-//             // set up objet to be populated using postcodesIO and sent back to airtable
-//             postcodeIdObj = {
-//                 id: record.id,
-//                 postcode: record.fields.postcode,
-//             }
-//             outputArray.push(postcodeIdObj)
-//         });
-//         fetchNextPage()
-//     }, function done(err) {
-//         if (err) { console.error(err); return }
-//     }
-//     )
-
-// }
-
 module.exports = { getNoGeo, updateGeo, getAllValidRows };
-
-// function(record) {
-//   // set up objet to be populated using postcodesIO and sent back to airtable
-//   const postcodeIdObj = {
-//     id: record.id,
-//     postcode: record.fields.postcode,
-//   };
-//   array.push(postcodeIdObj);
-// }

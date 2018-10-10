@@ -1,0 +1,158 @@
+{
+  "records": [
+    {
+      "id": "rec6i8mI1ua3ZK6D9",
+      "fields": {
+        "ID": 3,
+        "postcode": "N4 3HQ",
+        "address": "14 Goodwin Street, London",
+        "price_sqft": 15,
+        "use_class": "A3",
+        "date_of_last_rent_review": "2018-04-01",
+        "name": "Pure Cyprus",
+        "geolocation": "{\"lat\":51.564162,\"lng\":-0.107777}"
+      },
+      "createdTime": "2018-10-02T11:17:24.000Z"
+    },
+    {
+      "id": "recfoVT5cKCL7bH1d",
+      "fields": {
+        "ID": 4,
+        "postcode": "N4 3HP",
+        "address": "158 Fonthill Road",
+        "price_sqft": 12.5,
+        "use_class": "A3",
+        "date_of_last_rent_review": "2017-09-01",
+        "name": "Fonthill Cafe",
+        "geolocation": "{\"lat\":51.563799,\"lng\":-0.108516}"
+      },
+      "createdTime": "2018-10-09T14:01:27.000Z"
+    },
+    {
+      "id": "reco48Sb6uNCkk8eW",
+      "fields": {
+        "ID": 5,
+        "postcode": "N4 3HP",
+        "address": "152 Fonthill Road",
+        "price_sqft": 8.7,
+        "use_class": "A1",
+        "date_of_last_rent_review": "2017-09-01",
+        "name": "Red Button Passion",
+        "geolocation": "{\"lat\":51.563799,\"lng\":-0.108516}"
+      },
+      "createdTime": "2018-10-09T14:01:30.000Z"
+    },
+    {
+      "id": "recvMtU3SN3OPXEx8",
+      "fields": {
+        "ID": 6,
+        "postcode": "E8 3FP",
+        "address": "89-93 Fonthill Rd, London",
+        "price_sqft": 14,
+        "use_class": "A5",
+        "date_of_last_rent_review": "2017-07-02",
+        "name": "The London Fashion Centre",
+        "geolocation": "{\"lat\":51.53734,\"lng\":-0.058855}"
+      },
+      "createdTime": "2018-10-09T14:01:31.000Z"
+    },
+    {
+      "id": "recM2zRnYRQuVy38q",
+      "fields": {
+        "ID": 7,
+        "postcode": "N4 3HT",
+        "address": "102 Fonthill Rd, London ",
+        "price_sqft": 7.34,
+        "use_class": "A1",
+        "date_of_last_rent_review": "2017-02-23",
+        "name": "Diversity Design",
+        "geolocation": "{\"lat\":51.56503,\"lng\":-0.109703}"
+      },
+      "createdTime": "2018-10-09T14:01:32.000Z"
+    },
+    {
+      "id": "reciXlIJQaPr7FI8t",
+      "fields": {
+        "ID": 8,
+        "postcode": "N4 3HH",
+        "address": "135 Fonthill Rd London",
+        "price_sqft": 8.88,
+        "use_class": "A1",
+        "date_of_last_rent_review": "2016-01-01",
+        "name": "Loriana Clothing",
+        "geolocation": "{\"lat\":51.564261,\"lng\":-0.108292}"
+      },
+      "createdTime": "2018-10-09T14:01:32.000Z"
+    },
+    {
+      "id": "recZfsb9E8VEE0LGQ",
+      "fields": {
+        "ID": 9,
+        "postcode": "N4 3HP",
+        "address": "140 Fonthill Rd",
+        "price_sqft": 9.99,
+        "use_class": "A1",
+        "date_of_last_rent_review": "2018-03-01",
+        "name": "By Luca",
+        "geolocation": "{\"lat\":51.563799,\"lng\":-0.108516}"
+      },
+      "createdTime": "2018-10-09T14:01:37.000Z"
+    },
+    {
+      "id": "rec2JWTlbzgujG3l7",
+      "fields": {
+        "ID": 10,
+        "postcode": "N4 3JJ",
+        "address": "G6, Fashion Centre, 88-93 Fonthill Rd, London",
+        "price_sqft": 9.04,
+        "use_class": "B3",
+        "date_of_last_rent_review": "2016-05-09",
+        "name": "Bridal Originals",
+        "geolocation": "{\"lat\":51.565632,\"lng\":-0.109692}"
+      },
+      "createdTime": "2018-10-09T14:01:38.000Z"
+    },
+    {
+      "id": "reccLVBW4dxMN3OjC",
+      "fields": {
+        "ID": 11,
+        "postcode": "N4 3HP",
+        "address": "Unit 118, Fonthill Road",
+        "price_sqft": 6.66,
+        "use_class": "A1",
+        "date_of_last_rent_review": "2017-06-01",
+        "name": "Be Fabulous Fashion",
+        "geolocation": "{\"lat\":51.563799,\"lng\":-0.108516}"
+      },
+      "createdTime": "2018-10-09T14:01:38.000Z"
+    },
+    {
+      "id": "rec2XqqIcB1IElr4U",
+      "fields": {
+        "ID": 12,
+        "postcode": "N4 3HT",
+        "address": "92 Fonthill Rd, London ",
+        "price_sqft": 5.95,
+        "use_class": "A1",
+        "date_of_last_rent_review": "2017-12-11",
+        "name": "Anna Mode",
+        "geolocation": "{\"lat\":51.56503,\"lng\":-0.109703}"
+      },
+      "createdTime": "2018-10-09T14:01:41.000Z"
+    },
+    {
+      "id": "recSmwh1iuCpNAEJr",
+      "fields": {
+        "ID": 13,
+        "postcode": "N4 3HQ",
+        "address": "12 Goodwin Street",
+        "price_sqft": 6.98,
+        "use_class": "A1",
+        "date_of_last_rent_review": "2018-05-01",
+        "name": "Bardo",
+        "geolocation": "{\"lat\":51.564162,\"lng\":-0.107777}"
+      },
+      "createdTime": "2018-10-09T14:01:42.000Z"
+    }
+  ]
+}
