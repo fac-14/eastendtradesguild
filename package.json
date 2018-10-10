@@ -40,5 +40,16 @@
     "prettier": "^1.14.3",
     "react-testing-library": "^5.2.0",
     "supertest": "^3.3.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/node_modules/**",
+      "!**/build/**",
+      "!**/**/serviceWorker.js",
+      "!**/coverage/**",
+      "!**/server.js",
+      "!**/src/index.js"
+    ]
   }
 }
