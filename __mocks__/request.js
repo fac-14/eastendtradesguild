@@ -1,7 +1,7 @@
 const request = jest.genMockFromModule('request');
 
 // require JSON data from files
-const postcodesResponse = require('./json/postcodeResponse.json');
+const postcodesResponse = require('./json/postcodes_geolocation_data.json');
 const postcodeGetResponse = require('./json/postcodeGetResponse.json');
 const github = require('./json/github.json');
 

@@ -1,5 +1,15 @@
 const apiCall = require('./apiCall');
 
+beforeEach(() => {
+  // disable console as we're testing some error handling which should throw up errors
+  global.console.error = jest.fn().mockImplementation(() => {});
+  global.console.log = jest.fn().mockImplementation(() => {});
+});
+afterEach(() => {
+  global.console.error.mockRestore();
+  global.console.log.mockRestore();
+});
+
 describe('apiCall :: get', () => {
   it('resolves on successful request', () => {
     apiCall

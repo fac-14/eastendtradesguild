@@ -9,11 +9,13 @@ const get = url =>
         'User-Agent': 'request',
       },
     };
-    request.get(options, (error, response, body) => {
+    request.get(options, (error, res, body) => {
       if (error) {
-        reject(error);
-      } else if (response.statusCode != 200) {
-        reject(response.statusCode);
+        console.log('apiCall module failed, error: ', error);
+        resolve({});
+      } else if (res.statusCode != 200) {
+        console.error('apiCall module failed, status: ', res.statusCode);
+        resolve({});
       } else {
         resolve(body);
       }
@@ -29,9 +31,11 @@ const post = (url, json) =>
       },
       (error, res, body) => {
         if (error) {
-          reject(error);
+          console.error('apiCall module failed, error: ', error);
+          resolve({});
         } else if (res.statusCode != 200) {
-          reject(res.statusCode);
+          console.error('apiCall module failed, status: ', res.statusCode);
+          resolve({});
         } else {
           resolve(body);
         }
