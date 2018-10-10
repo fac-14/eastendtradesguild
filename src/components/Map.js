@@ -20,7 +20,7 @@ type MarkerData = {| ...Props, key: string |};
 const iconSelect = useClass => (
   L.divIcon({
     className: 'custom-icon',
-    html: ReactDOMServer.renderToString(<Icon useClass={useClass} />)
+    html: ReactDOMServer.renderToString(<Icon iconText={useClass} />)
   })
 );
 
@@ -87,7 +87,7 @@ export default class CustomComponent extends Component<{}, State> {
         postcode: "N4 3HQ",
         address: "14 Goodwin Street, London",
         priceSQFT: "£14",
-        useClass: 'B1'
+        useClass: 'A1'
       }
     ]
   };
