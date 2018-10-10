@@ -6,12 +6,12 @@ import { render, cleanup } from 'react-testing-library';
 beforeEach(() => {
   // disable console as we're testing some error handling which should throw up errors
   global.console.error = jest.fn().mockImplementation(() => {});
-  //global.console.log = jest.fn().mockImplementation(() => {});
+  global.console.log = jest.fn().mockImplementation(() => {});
 });
 afterEach(() => {
   cleanup;
   global.console.error.mockRestore();
-  //global.console.log.mockRestore();
+  global.console.log.mockRestore();
 });
 
 it('renders without crashing', () => {

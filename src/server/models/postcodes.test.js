@@ -8,7 +8,6 @@ const noGeoOutput = [
 
 const postcodeArray = ['N4 3HF', 'N4 3HH', 'N4 3HQ'];
 
-const postcodeGeoData = require('../../../mocks/postcodes_geolocation_data.json');
 describe('tests are running', () => {
   it('can add', () => {
     expect(1 + 1).toEqual(2);
