@@ -75,7 +75,7 @@ const requestRows = (view, cb) =>
           fetchNextPage();
         },
         function done(err) {
-          if (err) reject(err);
+          if (err) console.error(err);
           // console.log(outputArray);
           resolve(outputArray);
         }
@@ -101,7 +101,7 @@ const updateGeo = airtableResponse =>
 const joinWithIDs = (airtableResponse, postcodeResponse) =>
   new Promise((resolve, reject) => {
     let updateArray = [];
-    for (i = 0; i < airtableResponse.length; i++) {
+    for (let i = 0; i < airtableResponse.length; i++) {
       updateArray[i] = {
         id: airtableResponse[i].id,
         fields: {
@@ -116,7 +116,8 @@ const updateAirtable = (id, fields) =>
   new Promise((resolve, reject) => {
     base('fonthilldummy').update(id, fields, function(err, record) {
       if (err) {
-        reject(err);
+        console.error('error with Airtable module: ', err);
+        resolve(false);
       }
       resolve(record);
     });
@@ -128,4 +129,11 @@ const updateMany = array =>
     resolve(true);
   });
 
-module.exports = { getNoGeo, updateGeo, getAllValidRows };
+module.exports = {
+  getNoGeo,
+  updateGeo,
+  getAllValidRows,
+  joinWithIDs,
+  updateAirtable,
+  requestRows,
+};

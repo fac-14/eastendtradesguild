@@ -1,4 +1,4 @@
-const apiCall = require('./apiCall');
+const apiCall = require('./xhr');
 
 beforeEach(() => {
   // disable console as we're testing some error handling which should throw up errors

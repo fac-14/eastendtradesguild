@@ -18,7 +18,7 @@
       "id": "recfoVT5cKCL7bH1d",
       "fields": {
         "ID": 4,
-        "postcode": "N4 3HP",
+        "postcode": "",
         "address": "158 Fonthill Road",
         "price_sqft": 12.5,
         "use_class": "A3",
@@ -49,7 +49,7 @@
         "postcode": "E8 3FP",
         "address": "89-93 Fonthill Rd, London",
         "price_sqft": 14,
-        "use_class": "A5",
+        "use_class": "",
         "date_of_last_rent_review": "2017-07-02",
         "name": "The London Fashion Centre",
         "geolocation": "{\"lat\":51.53734,\"lng\":-0.058855}"
@@ -66,7 +66,7 @@
         "use_class": "A1",
         "date_of_last_rent_review": "2017-02-23",
         "name": "Diversity Design",
-        "geolocation": "{\"lat\":51.56503,\"lng\":-0.109703}"
+        "geolocation": ""
       },
       "createdTime": "2018-10-09T14:01:32.000Z"
     },

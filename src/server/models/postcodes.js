@@ -1,11 +1,10 @@
-const request = require('request');
-const apiCall = require('./utils/apiCall');
+const xhr = require('./utils/xhr');
 
 const makePostcodeArray = inputArray => inputArray.map(entry => entry.postcode);
 
 const getGeolocation = postcodeArray =>
   new Promise((resolve, reject) => {
-    apiCall
+    xhr
       .post('https://api.postcodes.io/postcodes', {
         postcodes: postcodeArray.slice(0, 100),
       })

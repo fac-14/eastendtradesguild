@@ -11,7 +11,7 @@ const get = url =>
     };
     request.get(options, (error, res, body) => {
       if (error) {
-        console.log('apiCall module failed, error: ', error);
+        console.error('apiCall module failed, error: ', error);
         resolve({});
       } else if (res.statusCode != 200) {
         console.error('apiCall module failed, status: ', res.statusCode);

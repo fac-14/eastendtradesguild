@@ -24,6 +24,10 @@ const setStatus = {
 
 const setError = {
   'https://api.error.com': 'server error',
+  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/fonthilldummy/givemeanerror?':
+    'server error',
+  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/fonthilldummy?maxRecords=1000&pageSize=100&view=throw_error':
+    'server error',
 };
 
 const request = (options, callback) => {
@@ -31,6 +35,8 @@ const request = (options, callback) => {
     post(options, callback);
   } else if (options.method === 'GET') {
     get(options, callback);
+  } else if (options.method === 'PATCH') {
+    patch(options, callback);
   }
 };
 
@@ -50,7 +56,12 @@ const post = (url, json, callback) => {
   );
 };
 
+const patch = jest.fn().mockImplementation((options, callback) => {
+  callback(setError[options.url] || null, {});
+});
+
 request.get = get;
 request.post = post;
+request.patch = patch;
 
 module.exports = request;
