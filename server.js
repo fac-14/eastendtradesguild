@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 const controllers = require('./src/server/controllers/index');
 
 const app = express();

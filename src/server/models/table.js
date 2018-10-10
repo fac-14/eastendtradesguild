@@ -5,9 +5,11 @@ const {
   makeLatLngArray,
 } = require('./postcodes');
 
+const apiKey = process.env.AIRTABLE_API_KEY || null;
+
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
-  apiKey: 'keyYBKUirvMxeaey5',
+  apiKey,
 });
 
 const base = Airtable.base('apphdQNWTLdRQbOOg');
