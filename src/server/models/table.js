@@ -84,18 +84,21 @@ const requestRows = (view, cb) =>
 
 const updateGeo = airtableResponse =>
   new Promise((resolve, reject) => {
-    // convert input object to array of postcodes
-    const postcodeArray = makePostcodeArray(airtableResponse);
-    // get geolocation for each one
-    getGeolocation(postcodeArray)
-      .then(makeLatLngArray)
-      // stitch ids and lat/lngs back together
-      .then(latLng => joinWithIDs(airtableResponse, latLng))
-      // update airtable
-      .then(updateMany)
-      .then(resolve)
-      .catch(console.log);
-    // resolve promise
+    if (airtableResponse.length === 0) {
+      resolve(0);
+    } else {
+      // convert input object to array of postcodes
+      const postcodeArray = makePostcodeArray(airtableResponse);
+      // get geolocation for each one
+      getGeolocation(postcodeArray)
+        .then(makeLatLngArray)
+        // stitch ids and lat/lngs back together
+        .then(latLng => joinWithIDs(airtableResponse, latLng))
+        // update airtable
+        .then(updateMany)
+        .then(resolve)
+        .catch(console.log);
+    }
   });
 
 const joinWithIDs = (airtableResponse, postcodeResponse) =>

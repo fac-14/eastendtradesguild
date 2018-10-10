@@ -102,6 +102,10 @@ describe('table :: updateGeo', () => {
     expect(request.patch.mock.calls).toHaveLength(4);
     request.patch.mockClear();
   });
+  it('returns 0 when called with an empty array', async () => {
+    const response = await table.updateGeo([]);
+    expect(response).toBe(0);
+  });
 });
 
 describe('table :: updateAirtable', () => {
