@@ -1,18 +1,38 @@
 import React, { Component } from "react";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 
 type Position = [number, number];
 
 type Props = {|
-  content: string,
-  position: Position
+  name: string,
+  position: Position,
+  postcode: string,
+  address: string,
+  priceSQFT: string,
+  useClass: string
 |};
 
 type MarkerData = {| ...Props, key: string |};
 
-const MyPopupMarker = ({ content, position }: Props) => (
+const MyPopupMarker = ({
+  name,
+  position,
+  postcode,
+  address,
+  priceSQFT
+}: Props) => (
   <Marker position={position}>
-    <Popup>{content}</Popup>
+    <Popup>
+      <ul>
+        <li>{name}</li>
+        <li>{postcode}</li>
+        <li>{address}</li>
+        <li>{priceSQFT}</li>
+      </ul>
+    </Popup>
+    <Tooltip direction="right" offset={[-8, -2]} opacity={1} permanent>
+      <span>{priceSQFT}</span>
+    </Tooltip>
   </Marker>
 );
 
@@ -30,9 +50,30 @@ type State = {
 export default class CustomComponent extends Component<{}, State> {
   state = {
     markers: [
-      { key: "marker1", position: [51.5, -0.1], content: "My first popup" },
-      { key: "marker2", position: [51.51, -0.1], content: "My second popup" },
-      { key: "marker3", position: [51.49, -0.05], content: "My third popup" }
+      {
+        key: "marker1",
+        position: [51.5, -0.1],
+        name: "Pure Cyprus",
+        postcode: "N4 3HQ",
+        address: "14 Goodwin Street, London",
+        priceSQFT: "£14"
+      },
+      {
+        key: "marker2",
+        position: [51.51, -0.1],
+        name: "Pure Cyprus",
+        postcode: "N4 3HQ",
+        address: "14 Goodwin Street, London",
+        priceSQFT: "£14"
+      },
+      {
+        key: "marker3",
+        position: [51.49, -0.05],
+        name: "Pure Cyprus",
+        postcode: "N4 3HQ",
+        address: "14 Goodwin Street, London",
+        priceSQFT: "£14"
+      }
     ]
   };
 

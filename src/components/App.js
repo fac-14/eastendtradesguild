@@ -4,10 +4,7 @@ import Map from "./Map";
 
 class App extends Component {
   state = {
-    response: "",
-    lat: 51.505,
-    lng: -0.09,
-    zoom: 13
+    response: ""
   };
 
   // componentDidMount() {
