@@ -5,12 +5,12 @@ type Position = [number, number];
 
 type Props = {|
   name: string,
-  position: Position,
-  postcode: string,
-  address: string,
-  priceSQFT: string,
-  useClass: string
-|};
+    position: Position,
+      postcode: string,
+        address: string,
+          priceSQFT: string,
+            useClass: string
+              |};
 
 type MarkerData = {| ...Props, key: string |};
 
@@ -21,20 +21,20 @@ const MyPopupMarker = ({
   address,
   priceSQFT
 }: Props) => (
-  <Marker position={position}>
-    <Popup>
-      <ul>
-        <li>{name}</li>
-        <li>{postcode}</li>
-        <li>{address}</li>
-        <li>{priceSQFT}</li>
-      </ul>
-    </Popup>
-    <Tooltip direction="right" offset={[-8, -2]} opacity={1} permanent>
-      <span>{priceSQFT}</span>
-    </Tooltip>
-  </Marker>
-);
+    <Marker position={position}>
+      <Popup>
+        <ul>
+          <li>{name}</li>
+          <li>{postcode}</li>
+          <li>{address}</li>
+          <li>{priceSQFT}</li>
+        </ul>
+      </Popup>
+      <Tooltip direction="center" offset={[-3, -45]} opacity={1} permanent>
+        <span>{priceSQFT}</span>
+      </Tooltip>
+    </Marker>
+  );
 
 const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
   const items = markers.map(({ key, ...props }) => (
