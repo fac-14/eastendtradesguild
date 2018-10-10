@@ -40,21 +40,21 @@ const request = (options, callback) => {
   }
 };
 
-const get = (options, callback) => {
+const get = jest.fn().mockImplementation((options, callback) => {
   callback(
     setError[options.url] || null,
     { statusCode: setStatus[options.url] || 200, text: getMocks[options.url] },
     getMocks[options.url]
   );
-};
+});
 
-const post = (url, json, callback) => {
+const post = jest.fn().mockImplementation((url, json, callback) => {
   callback(
     setError[url] || null,
     { statusCode: setStatus[url] || 200, text: postMocks[url] },
     postMocks[url]
   );
-};
+});
 
 const patch = jest.fn().mockImplementation((options, callback) => {
   callback(setError[options.url] || null, {});
