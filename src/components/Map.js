@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import ReactDOMServer from 'react-dom/server';
 import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
+import Icon from "./MarkerIcon";
+import L from 'leaflet';
 
 type Position = [number, number];
 
@@ -14,20 +17,29 @@ type Props = {|
 
 type MarkerData = {| ...Props, key: string |};
 
+const iconSelect = useClass => (
+  L.divIcon({
+    className: 'custom-icon',
+    html: ReactDOMServer.renderToString(<Icon useClass={useClass} />)
+  })
+);
+
 const MyPopupMarker = ({
   name,
   position,
   postcode,
   address,
-  priceSQFT
+  priceSQFT,
+  useClass
 }: Props) => (
-    <Marker position={position}>
+    <Marker position={position} icon={iconSelect(useClass)}>
       <Popup>
         <ul>
           <li>{name}</li>
           <li>{postcode}</li>
           <li>{address}</li>
           <li>{priceSQFT}</li>
+          <li>{useClass}</li>
         </ul>
       </Popup>
       <Tooltip direction="center" offset={[-3, -45]} opacity={1} permanent>
@@ -56,7 +68,8 @@ export default class CustomComponent extends Component<{}, State> {
         name: "Pure Cyprus",
         postcode: "N4 3HQ",
         address: "14 Goodwin Street, London",
-        priceSQFT: "£14"
+        priceSQFT: "£14",
+        useClass: 'A1'
       },
       {
         key: "marker2",
@@ -64,7 +77,8 @@ export default class CustomComponent extends Component<{}, State> {
         name: "Pure Cyprus",
         postcode: "N4 3HQ",
         address: "14 Goodwin Street, London",
-        priceSQFT: "£14"
+        priceSQFT: "£14",
+        useClass: 'A2'
       },
       {
         key: "marker3",
@@ -72,7 +86,8 @@ export default class CustomComponent extends Component<{}, State> {
         name: "Pure Cyprus",
         postcode: "N4 3HQ",
         address: "14 Goodwin Street, London",
-        priceSQFT: "£14"
+        priceSQFT: "£14",
+        useClass: 'B1'
       }
     ]
   };
