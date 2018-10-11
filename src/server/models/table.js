@@ -5,6 +5,7 @@ const {
   makeLatLngArray,
 } = require('./postcodes');
 
+/* istanbul ignore next */
 const apiKey = process.env.AIRTABLE_API_KEY
   ? process.env.AIRTABLE_API_KEY
   : process.env.NODE_ENV === 'production'
