@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import logo from './assets/logo.svg';
-import './App.css';
+import Header from './Header';
 
 class App extends Component {
   state = {
@@ -26,17 +25,14 @@ class App extends Component {
     const response = await fetch('/api/get_locations');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
-    console.log(body)
+    console.log(body);
     return body;
   };
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
+        <Header />
         <p className="App-intro">{this.state.response}</p>
       </div>
     );
