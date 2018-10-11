@@ -8,5 +8,5 @@
     "import/no-nodejs-modules": 0,
     "no-console": 0
   },
-  "extends": ["node", "prettier"]
+  "extends": ["react", "prettier"]
 }
