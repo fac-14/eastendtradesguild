@@ -1,4 +1,5 @@
-const apiCall = require('./xhr');
+const xhr = require('./xhr');
+const request = require('request');
 
 beforeEach(() => {
   // disable console as we're testing some error handling which should throw up errors
@@ -10,38 +11,40 @@ afterEach(() => {
   global.console.log.mockRestore();
 });
 
-describe('apiCall :: get', () => {
+describe('xhr :: get', () => {
   it('resolves on successful request', () => {
-    apiCall
-      .get('https://api.github.com/users/arrested-developer')
-      .then(body => expect(body.login).toEqual('the-jester'));
-  });
-  it('handles 500 status code', () => {
-    apiCall.get('https://api.500.com').catch(err => {
-      expect(err).toEqual(500);
+    xhr.get('https://api.github.com/users/arrested-developer').then(body => {
+      expect(body.login).toEqual('the-jester');
+      console.log(request.get.mock.calls);
+      expect(request.get.mock.calls).toHaveLength(1);
     });
   });
-  it('handles error thrown by request', () => {
-    apiCall.get('https://api.error.com').catch(err => {
-      expect(err).toEqual('server error');
-    });
+  it('handles non-400 status without crashing', async () => {
+    const actual = await xhr.get('https://api.500.com');
+    expect(actual).toEqual({});
+    expect(global.console.error.mock.calls).toHaveLength(1);
+  });
+  it('handles error argument without crashing', async () => {
+    const actual = await xhr.get('https://api.error.com');
+    expect(actual).toEqual({});
+    expect(global.console.error.mock.calls).toHaveLength(1);
   });
 });
 
-describe('apiCall :: post', () => {
+describe('xhr :: post', () => {
   it('resolves on successful request', () => {
-    apiCall
+    xhr
       .post('https://api.postcodes.io/postcodes', {})
       .then(body => expect(body.status).toBe(200));
   });
-  it('handles 500 status code', () => {
-    apiCall.post('https://api.500.com').catch(err => {
-      expect(err).toEqual(500);
-    });
+  it('handles non-400 status without crashing', async () => {
+    const actual = await xhr.post('https://api.500.com');
+    expect(actual).toEqual({});
+    expect(global.console.error.mock.calls).toHaveLength(1);
   });
-  it('handles error thrown by request', () => {
-    apiCall.post('https://api.error.com').catch(err => {
-      expect(err).toEqual('server error');
-    });
+  it('handles error argument without crashing', async () => {
+    const actual = await xhr.post('https://api.error.com');
+    expect(actual).toEqual({});
+    expect(global.console.error.mock.calls).toHaveLength(1);
   });
 });
