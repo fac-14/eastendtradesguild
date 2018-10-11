@@ -61,7 +61,7 @@ type State = {
 export default class CustomComponent extends Component<{}, State> {
   render() {
     return (
-      <Map center={[51.505, -0.09]} zoom={13}>
+      <Map center={[51.564162, -0.107777]} zoom={16}>
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
