@@ -1,0 +1,37 @@
+{
+  "status": 200,
+  "mocked": true,
+  "result": {
+    "postcode": "E8 3FP",
+    "quality": 1,
+    "eastings": 534723,
+    "northings": 183834,
+    "country": "England",
+    "nhs_ha": "London",
+    "longitude": -0.058855,
+    "latitude": 51.53734,
+    "european_electoral_region": "London",
+    "primary_care_trust": "City and Hackney Teaching",
+    "region": "London",
+    "lsoa": "Hackney 023G",
+    "msoa": "Hackney 023",
+    "incode": "3FP",
+    "outcode": "E8",
+    "parliamentary_constituency": "Hackney South and Shoreditch",
+    "admin_district": "Hackney",
+    "parish": "Hackney, unparished area",
+    "admin_county": null,
+    "admin_ward": "London Fields",
+    "ccg": "NHS City and Hackney",
+    "nuts": "Hackney and Newham",
+    "codes": {
+      "admin_district": "E09000012",
+      "admin_county": "E99999999",
+      "admin_ward": "E05009381",
+      "parish": "E43000202",
+      "parliamentary_constituency": "E14000721",
+      "ccg": "E38000035",
+      "nuts": "UKI41"
+    }
+  }
+}

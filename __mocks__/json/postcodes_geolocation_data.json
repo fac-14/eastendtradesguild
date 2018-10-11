@@ -1,0 +1,113 @@
+{
+    "status": 200,
+    "result": [
+        {
+            "query": "N4 3HF",
+            "result": {
+                "postcode": "N4 3HF",
+                "quality": 1,
+                "eastings": 531262,
+                "northings": 186680,
+                "country": "England",
+                "nhs_ha": "London",
+                "longitude": -0.107694,
+                "latitude": 51.563729,
+                "european_electoral_region": "London",
+                "primary_care_trust": "Islington",
+                "region": "London",
+                "lsoa": "Islington 005B",
+                "msoa": "Islington 005",
+                "incode": "3HF",
+                "outcode": "N4",
+                "parliamentary_constituency": "Islington North",
+                "admin_district": "Islington",
+                "parish": "Islington, unparished area",
+                "admin_county": null,
+                "admin_ward": "Finsbury Park",
+                "ccg": "NHS Islington",
+                "nuts": "Haringey and Islington",
+                "codes": {
+                    "admin_district": "E09000019",
+                    "admin_county": "E99999999",
+                    "admin_ward": "E05000371",
+                    "parish": "E43000209",
+                    "parliamentary_constituency": "E14000763",
+                    "ccg": "E38000088",
+                    "nuts": "UKI43"
+                }
+            }
+        },
+        {
+            "query": "N4 3HH",
+            "result": {
+                "postcode": "N4 3HH",
+                "quality": 1,
+                "eastings": 531219,
+                "northings": 186738,
+                "country": "England",
+                "nhs_ha": "London",
+                "longitude": -0.108292,
+                "latitude": 51.564261,
+                "european_electoral_region": "London",
+                "primary_care_trust": "Islington",
+                "region": "London",
+                "lsoa": "Islington 005B",
+                "msoa": "Islington 005",
+                "incode": "3HH",
+                "outcode": "N4",
+                "parliamentary_constituency": "Islington North",
+                "admin_district": "Islington",
+                "parish": "Islington, unparished area",
+                "admin_county": null,
+                "admin_ward": "Finsbury Park",
+                "ccg": "NHS Islington",
+                "nuts": "Haringey and Islington",
+                "codes": {
+                    "admin_district": "E09000019",
+                    "admin_county": "E99999999",
+                    "admin_ward": "E05000371",
+                    "parish": "E43000209",
+                    "parliamentary_constituency": "E14000763",
+                    "ccg": "E38000088",
+                    "nuts": "UKI43"
+                }
+            }
+        },
+        {
+            "query": "N4 3HQ",
+            "result": {
+                "postcode": "N4 3HQ",
+                "quality": 1,
+                "eastings": 531255,
+                "northings": 186728,
+                "country": "England",
+                "nhs_ha": "London",
+                "longitude": -0.107777,
+                "latitude": 51.564162,
+                "european_electoral_region": "London",
+                "primary_care_trust": "Islington",
+                "region": "London",
+                "lsoa": "Islington 005B",
+                "msoa": "Islington 005",
+                "incode": "3HQ",
+                "outcode": "N4",
+                "parliamentary_constituency": "Islington North",
+                "admin_district": "Islington",
+                "parish": "Islington, unparished area",
+                "admin_county": null,
+                "admin_ward": "Finsbury Park",
+                "ccg": "NHS Islington",
+                "nuts": "Haringey and Islington",
+                "codes": {
+                    "admin_district": "E09000019",
+                    "admin_county": "E99999999",
+                    "admin_ward": "E05000371",
+                    "parish": "E43000209",
+                    "parliamentary_constituency": "E14000763",
+                    "ccg": "E38000088",
+                    "nuts": "UKI43"
+                }
+            }
+        }
+    ]
+}

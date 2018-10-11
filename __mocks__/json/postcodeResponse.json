@@ -1,0 +1,78 @@
+{
+  "status": 200,
+  "mocked": true,
+  "result": [
+    {
+      "query": "e8 3fp",
+      "result": {
+        "postcode": "E8 3FP",
+        "quality": 1,
+        "eastings": 534723,
+        "northings": 183834,
+        "country": "England",
+        "nhs_ha": "London",
+        "longitude": -0.058855,
+        "latitude": 51.53734,
+        "european_electoral_region": "London",
+        "primary_care_trust": "City and Hackney Teaching",
+        "region": "London",
+        "lsoa": "Hackney 023G",
+        "msoa": "Hackney 023",
+        "incode": "3FP",
+        "outcode": "E8",
+        "parliamentary_constituency": "Hackney South and Shoreditch",
+        "admin_district": "Hackney",
+        "parish": "Hackney, unparished area",
+        "admin_county": null,
+        "admin_ward": "London Fields",
+        "ccg": "NHS City and Hackney",
+        "nuts": "Hackney and Newham",
+        "codes": {
+          "admin_district": "E09000012",
+          "admin_county": "E99999999",
+          "admin_ward": "E05009381",
+          "parish": "E43000202",
+          "parliamentary_constituency": "E14000721",
+          "ccg": "E38000035",
+          "nuts": "UKI41"
+        }
+      }
+    },
+    {
+      "query": "gl12 7ez",
+      "result": {
+        "postcode": "GL12 7EZ",
+        "quality": 1,
+        "eastings": 375743,
+        "northings": 193155,
+        "country": "England",
+        "nhs_ha": "South West",
+        "longitude": -2.351897,
+        "latitude": 51.636673,
+        "european_electoral_region": "South West",
+        "primary_care_trust": "Gloucestershire",
+        "region": "South West",
+        "lsoa": "Stroud 015E",
+        "msoa": "Stroud 015",
+        "incode": "7EZ",
+        "outcode": "GL12",
+        "parliamentary_constituency": "The Cotswolds",
+        "admin_district": "Stroud",
+        "parish": "Wotton-under-Edge",
+        "admin_county": "Gloucestershire",
+        "admin_ward": "Wotton-under-Edge",
+        "ccg": "NHS Gloucestershire",
+        "nuts": "Gloucestershire",
+        "codes": {
+          "admin_district": "E07000082",
+          "admin_county": "E10000013",
+          "admin_ward": "E05010994",
+          "parish": "E04004387",
+          "parliamentary_constituency": "E14000991",
+          "ccg": "E38000062",
+          "nuts": "UKK13"
+        }
+      }
+    }
+  ]
+}
