@@ -1,16 +1,21 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import Header from "./Header";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import Header from './Header';
+import appTitle from './assets/app_title.png';
 
-import logo from "./assets/logo.png";
+import logo from './assets/logo.png';
 
 const LargeCenteredImage = styled.img.attrs({
-  className: "h-75 "
+  className: 'w-100 h-auto pv2',
+})``;
+
+const HeaderTitle = styled.img.attrs({
+  className: 'w-70 mw5',
 })``;
 
 class App extends Component {
   state = {
-    response: ""
+    response: '',
   };
 
   componentDidMount() {
@@ -29,7 +34,7 @@ class App extends Component {
   }
 
   callApi = async () => {
-    const response = await fetch("/api/get_locations");
+    const response = await fetch('/api/get_locations');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     console.log(body);
@@ -39,9 +44,9 @@ class App extends Component {
   render() {
     return (
       <div className="App vh-100 vw-100">
-        <Header />
-        <div className=" debug flex justify-center items-center h-75 w-100 ">
-          <LargeCenteredImage src={logo} alt="East End Trades Guild" />
+        <div className="w-70 w-40-ns h-100 mw5 center flex flex-column items-center justify-center">
+          <LargeCenteredImage src={logo} />
+          <HeaderTitle src={appTitle} />
         </div>
       </div>
     );
