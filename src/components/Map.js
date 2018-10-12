@@ -4,7 +4,7 @@ import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import Icon from "./MarkerIcon";
 import L from "leaflet";
 
-type Position = [number, number];
+// type Position = [number, number];
 
 type Props = {|
   name: string,
