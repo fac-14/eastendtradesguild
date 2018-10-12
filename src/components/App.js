@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import Header from './Header';
+import React, { Component } from "react";
+import styled from "styled-components";
+import Header from "./Header";
 
-import logo from './assets/logo.png';
+import logo from "./assets/logo.png";
 
 const LargeCenteredImage = styled.img.attrs({
-  className: 'w70 centered',
+  className: "h-75 "
 })``;
 
 class App extends Component {
   state = {
-    response: '',
+    response: ""
   };
 
   componentDidMount() {
@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   callApi = async () => {
-    const response = await fetch('/api/get_locations');
+    const response = await fetch("/api/get_locations");
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     console.log(body);
@@ -38,9 +38,11 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App vh-100 vw-100">
         <Header />
-        <LargeCenteredImage src={logo} alt="East End Trades Guild" />
+        <div className=" debug flex justify-center items-center h-75 w-100 ">
+          <LargeCenteredImage src={logo} alt="East End Trades Guild" />
+        </div>
       </div>
     );
   }
