@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export default class SVGIconComponent extends Component {
   render() {
-    const iconText = this.props.iconText || 0;
+    const iconText = this.props.iconText;
     return (
       <svg
         width="35px"
