@@ -1,43 +1,39 @@
-import React, { Component } from 'react';
-import logo from './assets/logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Map from "./Map";
 
 class App extends Component {
   state = {
-    response: '',
+    response: "",
+    markers: []
   };
 
   componentDidMount() {
-    this._mounted = true;
     this.callApi()
       .then(res => {
-        this.setState({ response: res.express });
+        this.setState({ markers: res });
       })
       .catch(err => {
         console.log(err);
       });
   }
 
-  componentWillUnmount() {
-    this._mounted = false;
-  }
+  // componentWillUnmount() {
+  //   this._mounted = false;
+  // }
 
   callApi = async () => {
-    const response = await fetch('/api/get_locations');
+    const response = await fetch("/api/get_locations");
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
-    console.log(body)
+    console.log(body);
     return body;
   };
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">{this.state.response}</p>
+        <Map markers={this.state.markers} />
       </div>
     );
   }
