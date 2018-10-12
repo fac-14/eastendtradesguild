@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Header from './Header';
+
+import logo from './assets/logo.png';
+
+const LargeCenteredImage = styled.img.attrs({
+  className: 'w70 centered',
+})``;
 
 class App extends Component {
   state = {
@@ -7,14 +14,14 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this._mounted = true;
-    this.callApi()
-      .then(res => {
-        this.setState({ response: res.express });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // this._mounted = true;
+    // this.callApi()
+    //   .then(res => {
+    //     this.setState({ response: res.express });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   componentWillUnmount() {
@@ -33,7 +40,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <p className="App-intro">{this.state.response}</p>
+        <LargeCenteredImage src={logo} alt="East End Trades Guild" />
       </div>
     );
   }
