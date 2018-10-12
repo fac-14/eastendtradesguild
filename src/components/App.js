@@ -11,7 +11,9 @@ class App extends Component {
   componentDidMount() {
     this.callApi()
       .then(res => {
-        this.setState({ markers: res });
+        this.setState({ markers: res }, () => {
+          console.log(console.log(res));
+        });
       })
       .catch(err => {
         console.log(err);
