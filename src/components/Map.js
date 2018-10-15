@@ -3,6 +3,7 @@ import ReactDOMServer from "react-dom/server";
 import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import Icon from "./MarkerIcon";
 import L from "leaflet";
+import "./Map.css"
 
 type Props = {|
   name: string,
@@ -39,7 +40,7 @@ const MarkerWithPopup = ({
           <li>{use_class}</li>
         </ul>
       </Popup>
-      <Tooltip offset={[-27.75, -27.75]} className="price-icon" direction="center" opacity={1} permanent>
+      <Tooltip offset={[-24, -23]} className="price-icon" direction="center" opacity={1} permanent>
         <div>£{price_sqft}</div>
         <div>/sqft</div>
       </Tooltip>
