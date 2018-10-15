@@ -17,10 +17,10 @@ type Props = {|
 
 type MarkerData = {| ...Props, key: string |};
 
-const iconSelect = useClass =>
+const iconSelect = () =>
   L.divIcon({
     className: "custom-icon",
-    html: ReactDOMServer.renderToString(<Icon iconText={useClass} />)
+    html: ReactDOMServer.renderToString(<div className="blank-marker" />)
   });
 
 const MarkerWithPopup = ({
@@ -31,7 +31,7 @@ const MarkerWithPopup = ({
   price_sqft,
   use_class
 }: Props) => (
-    <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
+    <Marker position={JSON.parse(geolocation)} icon={iconSelect()}>
       <Popup>
         <ul>
           <li>{name}</li>
@@ -41,8 +41,9 @@ const MarkerWithPopup = ({
           <li>{use_class}</li>
         </ul>
       </Popup>
-      <Tooltip direction="center" offset={[-3, -45]} opacity={1} permanent>
-        <span>{price_sqft}</span>
+      <Tooltip className="price-icon" direction="center" opacity={1} permanent>
+        <div>£{price_sqft}</div>
+        <div>/sqft</div>
       </Tooltip>
     </Marker>
   );

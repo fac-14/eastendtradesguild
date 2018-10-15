@@ -22,6 +22,22 @@
   color: #61dafb;
 }
 
+.chart-number {
+  font-size: 10px;
+}
+
+.price-icon {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+
+.blank_marker {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
