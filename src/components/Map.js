@@ -8,12 +8,12 @@ import L from "leaflet";
 
 type Props = {|
   name: string,
-  geolocation: string,
-  postcode: string,
-  address: string,
-  price_sqft: number,
-  use_class: string
-|};
+    geolocation: string,
+      postcode: string,
+        address: string,
+          price_sqft: number,
+            use_class: string
+              |};
 
 type MarkerData = {| ...Props, key: string |};
 
@@ -23,7 +23,7 @@ const iconSelect = useClass =>
     html: ReactDOMServer.renderToString(<Icon iconText={useClass} />)
   });
 
-const MyPopupMarker = ({
+const MarkerWithPopup = ({
   name,
   geolocation,
   postcode,
@@ -31,43 +31,37 @@ const MyPopupMarker = ({
   price_sqft,
   use_class
 }: Props) => (
-  <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
-    <Popup>
-      <ul>
-        <li>{name}</li>
-        <li>{postcode}</li>
-        <li>{address}</li>
-        <li>{price_sqft}</li>
-        <li>{use_class}</li>
-      </ul>
-    </Popup>
-    <Tooltip direction="center" offset={[-3, -45]} opacity={1} permanent>
-      <span>{price_sqft}</span>
-    </Tooltip>
-  </Marker>
-);
+    <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
+      <Popup>
+        <ul>
+          <li>{name}</li>
+          <li>{postcode}</li>
+          <li>{address}</li>
+          <li>{price_sqft}</li>
+          <li>{use_class}</li>
+        </ul>
+      </Popup>
+      <Tooltip direction="center" offset={[-3, -45]} opacity={1} permanent>
+        <span>{price_sqft}</span>
+      </Tooltip>
+    </Marker>
+  );
 
-const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
+const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
   const items = markers.map(({ key, ...props }) => (
-    <MyPopupMarker key={key} {...props} />
+    <MarkerWithPopup key={key} {...props} />
   ));
   return <React.Fragment>{items}</React.Fragment>;
 };
 
-type State = {
-  markers: Array<MarkerData>
-};
-
-export default class CustomComponent extends Component<{}, State> {
-  render() {
-    return (
-      <Map center={[51.564162, -0.107777]} zoom={16}>
-        <TileLayer
-          attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <MyMarkersList markers={this.props.markers} />
-      </Map>
-    );
-  }
+export default props => {
+  return (
+    <Map center={[51.564162, -0.107777]} zoom={16}>
+      <TileLayer
+        attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Markers markers={props.markers} />
+    </Map>
+  );
 }

@@ -36,7 +36,7 @@ export default class SVGIconComponent extends Component {
           cy="21"
           r="15.91549430918954"
           fill="transparent"
-          stroke="#ce4b99"
+          stroke="#FFFF00"
           strokeWidth="3"
           strokeDasharray={`${iconText} ${100 - iconText}`}
           strokeDashoffset="25"
