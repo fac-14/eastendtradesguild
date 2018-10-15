@@ -1,7 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default ({ useClass, price }) => {
-  //const iconText = this.props.iconText;
+export default ({ useClass }) => {
+
+  const useClassColor = {
+    "A1": "#ff80cc",
+    "A3": "#9eebcf",
+    "B1": "#96ccff",
+    "B2": "#fbf1a9",
+    "B8": "#ffb700",
+    "D1": "#a463f2",
+    "D2": "#ff6300",
+    "Other": "#fff"
+  }
 
   return (
     <svg
@@ -25,27 +35,10 @@ export default ({ useClass, price }) => {
         cx="21"
         cy="21"
         r="15.91549430918954"
-        fill="#FFFF00"
-        // stroke="#d2d3d4"
+        fill={useClassColor[useClass]}
         strokeWidth="3"
         role="presentation"
       />
-      {/* <circle
-        className="donut-segment"
-        cx="21"
-        cy="21"
-        r="15.91549430918954"
-        fill="transparent"
-        stroke="#dFFF00"
-        strokeWidth="3"
-        strokeDashoffset="25"
-        aria-labelledby="donut-segment-1-title donut-segment-1-desc"
-      /> */}
-      <g className="chart-text">
-        <text className="chart-number" x="25%" y="60%">
-          £{price}
-        </text>
-      </g>
     </svg>
   );
 }

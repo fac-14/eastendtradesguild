@@ -1,10 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import Icon from "./MarkerIcon";
 import L from "leaflet";
-
-// type Position = [number, number];
 
 type Props = {|
   name: string,
@@ -17,10 +15,10 @@ type Props = {|
 
 type MarkerData = {| ...Props, key: string |};
 
-const iconSelect = () =>
+const iconSelect = useClass =>
   L.divIcon({
     className: "custom-icon",
-    html: ReactDOMServer.renderToString(<div className="blank-marker" />)
+    html: ReactDOMServer.renderToString(<Icon useClass={useClass} />)
   });
 
 const MarkerWithPopup = ({
@@ -31,7 +29,7 @@ const MarkerWithPopup = ({
   price_sqft,
   use_class
 }: Props) => (
-    <Marker position={JSON.parse(geolocation)} icon={iconSelect()}>
+    <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
       <Popup>
         <ul>
           <li>{name}</li>
@@ -41,7 +39,7 @@ const MarkerWithPopup = ({
           <li>{use_class}</li>
         </ul>
       </Popup>
-      <Tooltip className="price-icon" direction="center" opacity={1} permanent>
+      <Tooltip offset={[-27.75, -27.75]} className="price-icon" direction="center" opacity={1} permanent>
         <div>£{price_sqft}</div>
         <div>/sqft</div>
       </Tooltip>
