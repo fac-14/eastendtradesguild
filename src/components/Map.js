@@ -63,7 +63,7 @@ const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
 
 export default props => {
   return (
-    <Map center={[51.564162, -0.107777]} zoom={16} maxZoom={18}>
+    <Map center={props.center} zoom={16} maxZoom={18}>
       <TileLayer
         attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

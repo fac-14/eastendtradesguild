@@ -4,7 +4,8 @@ import Map from "./Map";
 class App extends Component {
   state = {
     response: "",
-    markers: []
+    markers: [],
+    center: [51.564162, -0.107777]
   };
 
   componentDidMount() {
@@ -27,7 +28,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Map markers={this.state.markers} />
+        <Map markers={this.state.markers} center={this.state.center} />
       </div>
     );
   }
