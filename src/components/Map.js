@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 import Icon from "./MarkerIcon";
 import L from "leaflet";
-
-// type Position = [number, number];
+import "./Map.css";
 
 type Props = {|
   name: string,
@@ -20,10 +20,10 @@ type MarkerData = {| ...Props, key: string |};
 const iconSelect = useClass =>
   L.divIcon({
     className: "custom-icon",
-    html: ReactDOMServer.renderToString(<Icon iconText={useClass} />)
+    html: ReactDOMServer.renderToString(<Icon useClass={useClass} />)
   });
 
-const MyPopupMarker = ({
+const MarkerWithPopup = ({
   name,
   geolocation,
   postcode,
@@ -41,33 +41,36 @@ const MyPopupMarker = ({
         <li>{use_class}</li>
       </ul>
     </Popup>
-    <Tooltip direction="center" offset={[-3, -45]} opacity={1} permanent>
-      <span>{price_sqft}</span>
+    <Tooltip
+      offset={[-24, -23]}
+      className="price-icon"
+      direction="center"
+      opacity={1}
+      permanent
+    >
+      <div>£{price_sqft}</div>
+      <div>/sqft</div>
     </Tooltip>
   </Marker>
 );
 
-const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
+const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
   const items = markers.map(({ key, ...props }) => (
-    <MyPopupMarker key={key} {...props} />
+    <MarkerWithPopup key={key} {...props} />
   ));
   return <React.Fragment>{items}</React.Fragment>;
 };
 
-type State = {
-  markers: Array<MarkerData>
+export default props => {
+  return (
+    <Map center={props.center} zoom={16} maxZoom={18} preferCanvas={true}>
+      <TileLayer
+        attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <MarkerClusterGroup>
+        <Markers markers={props.markers} />
+      </MarkerClusterGroup>
+    </Map>
+  );
 };
-
-export default class CustomComponent extends Component<{}, State> {
-  render() {
-    return (
-      <Map center={[51.564162, -0.107777]} zoom={16}>
-        <TileLayer
-          attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <MyMarkersList markers={this.props.markers} />
-      </Map>
-    );
-  }
-}

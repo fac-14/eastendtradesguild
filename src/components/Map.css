@@ -1,0 +1,10 @@
+.price-icon {
+  text-align: center;
+  font-weight: bold;
+  border-radius: 50%;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+}
