@@ -31,29 +31,32 @@ const MarkerWithPopup = ({
   price_sqft,
   use_class,
   clickFunction,
-}: Props) => (
-  <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
-    <Popup>
-      <ul>
-        <li>{address}</li>
-        <li>{postcode}</li>
-        <li>£{price_sqft} /sqft</li>
-        <li>{use_class}</li>
-        <li onClick={() => console.log('clicked')}>See More</li>
-      </ul>
-    </Popup>
-    <Tooltip
-      offset={[-20, -20]}
-      className="price-icon avenir tc w3"
-      direction="center"
-      opacity={1}
-      permanent
-    >
-      <div className="f6 b">£{price_sqft}</div>
-      <div className="f7 ml1">/sqft</div>
-    </Tooltip>
-  </Marker>
-);
+}: Props) => {
+  const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  return (
+    <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
+      <Popup>
+        <ul>
+          <li>{address}</li>
+          <li>{postcode}</li>
+          <li>£{price} /sqft</li>
+          <li>{use_class}</li>
+          <li onClick={() => console.log('clicked')}>See More</li>
+        </ul>
+      </Popup>
+      <Tooltip
+        offset={[-20, -25]}
+        className="price-icon avenir"
+        direction="center"
+        opacity={1}
+        permanent
+      >
+        <div className="f6 b {price.length < 4 && ml2}">£{price}</div>
+        <div className="f7 ml3">/sqft</div>
+      </Tooltip>
+    </Marker>
+  );
+};
 
 const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
   const items = markers.map(({ key, ...props }) => (

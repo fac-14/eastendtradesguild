@@ -14,8 +14,8 @@ export default ({ useClass }) => {
 
   return (
     <svg
-      width="70px"
-      height="70px"
+      width="80px"
+      height="80px"
       viewBox="0 0 42 42"
       className="donut"
       aria-labelledby="location label"
