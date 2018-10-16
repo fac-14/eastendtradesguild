@@ -6,7 +6,6 @@ class App extends Component {
   state = {
     response: "",
     markers: [],
-    centerPostcode: '',
     center: [51.564162, -0.107777]
   };
 
@@ -31,7 +30,7 @@ class App extends Component {
     return (
       <div className="App">
         {/* <Map markers={this.state.markers} center={this.state.center} /> */}
-        <PostcodeForm value={this.state.centerPostcode} />
+        <PostcodeForm />
       </div>
     );
   }
