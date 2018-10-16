@@ -8,11 +8,11 @@ import './Map.css';
 
 type Props = {|
   name: string,
-  geolocation: string,
-  postcode: string,
-  address: string,
-  price_sqft: number,
-  use_class: string,
+    geolocation: string,
+      postcode: string,
+        address: string,
+          price_sqft: number,
+            use_class: string,
 |};
 
 type MarkerData = {| ...Props, key: string |};
@@ -65,7 +65,7 @@ const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
   return <React.Fragment>{items}</React.Fragment>;
 };
 
-const createClusterCustomIcon = function(cluster) {
+const createClusterCustomIcon = function (cluster) {
   return L.divIcon({
     html: `<span>${cluster.getChildCount()}</span>`,
     className: 'f6 link dim br-pill w2 h2 pt2 dib white bg-dark-pink tc b',

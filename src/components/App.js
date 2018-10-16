@@ -4,6 +4,7 @@ import PostcodeForm from "./PostcodeForm";
 import styled from "styled-components";
 import Landing from "./Landing";
 import Header from "./Header";
+import Modal from 'react-responsive-modal';
 
 const FullScreenContainer = styled.div.attrs({
   className: "vh-100 vw-100 near-black avenir"
@@ -17,7 +18,16 @@ class App extends Component {
     loaded: false,
     postcode: "",
     center: defaultLocation,
-    postcodeInv: false
+    postcodeInv: false,
+    open: false
+  };
+
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
   };
 
   componentDidMount() {
@@ -83,13 +93,18 @@ class App extends Component {
   handleUserLocation = arr => {
     if (this.state.center === defaultLocation) {
       return (
-        <PostcodeForm
-          onSubmit={this.handleSubmit}
-          postcode={this.state.postcode}
-          center={this.state.center}
-          onChange={this.handleChange}
-          handleInvalidPostcode={this.handleInvalidPostcode}
-        />
+        <div>
+          <button className='ma5' onClick={this.onOpenModal}>Enter Postcode</button>
+          <Modal open={this.state.open} onClose={this.onCloseModal} center>
+            <PostcodeForm
+              onSubmit={this.handleSubmit}
+              postcode={this.state.postcode}
+              center={this.state.center}
+              onChange={this.handleChange}
+              handleInvalidPostcode={this.handleInvalidPostcode}
+            />
+          </Modal>
+        </div>
       );
     }
     return <Map markers={this.state.markers} center={this.state.center} />;
@@ -106,7 +121,7 @@ class App extends Component {
     return (
       <FullScreenContainer>
         {(!loaded || !markers) && <Landing />}
-        <Header />
+        <Header onOpenModal={this.onOpenModal} />
         {markers &&
           loaded && (
             this.handleUserLocation(center)
@@ -115,11 +130,5 @@ class App extends Component {
     );
   }
 }
-//   render = () => {
-//     return (
-//       <div className="App">{this.handleUserLocation(this.state.center)}</div>
-//     );
-//   };
-// }
 
 export default App;
