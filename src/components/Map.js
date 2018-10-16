@@ -1,10 +1,10 @@
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-markercluster";
-import Icon from "./MarkerIcon";
-import L from "leaflet";
-import "./Map.css";
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { Map, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
+import Icon from './MarkerIcon';
+import L from 'leaflet';
+import './Map.css';
 
 type Props = {|
   name: string,
@@ -12,15 +12,15 @@ type Props = {|
   postcode: string,
   address: string,
   price_sqft: number,
-  use_class: string
+  use_class: string,
 |};
 
 type MarkerData = {| ...Props, key: string |};
 
 const iconSelect = useClass =>
   L.divIcon({
-    className: "custom-icon",
-    html: ReactDOMServer.renderToString(<Icon useClass={useClass} />)
+    className: 'custom-icon',
+    html: ReactDOMServer.renderToString(<Icon useClass={useClass} />),
   });
 
 const MarkerWithPopup = ({
@@ -29,7 +29,7 @@ const MarkerWithPopup = ({
   postcode,
   address,
   price_sqft,
-  use_class
+  use_class,
 }: Props) => (
   <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
     <Popup>
@@ -63,7 +63,13 @@ const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
 
 export default props => {
   return (
-    <Map center={props.center} zoom={16} maxZoom={18} preferCanvas={true}>
+    <Map
+      className="h-100 w-100"
+      center={props.center}
+      zoom={16}
+      maxZoom={18}
+      preferCanvas={true}
+    >
       <TileLayer
         attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

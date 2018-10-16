@@ -1,11 +1,16 @@
-import React, { Component } from "react";
-import Map from "./Map";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import Map from './Map';
+
+const FullScreenContainer = styled.div.attrs({
+  className: 'vh-100 vw-100 near-black avenir',
+})``;
 
 class App extends Component {
   state = {
-    response: "",
+    response: '',
     markers: [],
-    center: [51.564162, -0.107777]
+    center: [51.564162, -0.107777],
   };
 
   componentDidMount() {
@@ -19,7 +24,7 @@ class App extends Component {
   }
 
   callApi = async () => {
-    const response = await fetch("/api/get_locations");
+    const response = await fetch('/api/get_locations');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
@@ -27,9 +32,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <FullScreenContainer>
         <Map markers={this.state.markers} center={this.state.center} />
-      </div>
+      </FullScreenContainer>
     );
   }
 }
