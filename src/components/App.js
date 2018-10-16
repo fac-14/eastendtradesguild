@@ -39,15 +39,23 @@ class App extends Component {
     setTimeout(() => this.setState({ loaded: true }), loadingTime);
   };
 
+  createModal = () => {
+    this.setState({ modal: true });
+  };
+
   render() {
-    const { loaded, markers } = this.state;
+    const { loaded, markers, modal } = this.state;
     return (
       <FullScreenContainer>
         {(!loaded || !markers) && <Landing />}
         <Header />
         {markers &&
           loaded && (
-            <Map markers={this.state.markers} center={this.state.center} />
+            <Map
+              modal
+              markers={this.state.markers}
+              center={this.state.center}
+            />
           )}
       </FullScreenContainer>
     );
