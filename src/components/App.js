@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Header from './Header';
 import Map from './Map';
 
 const FullScreenContainer = styled.div.attrs({
@@ -33,6 +34,7 @@ class App extends Component {
   render() {
     return (
       <FullScreenContainer>
+        <Header />
         <Map markers={this.state.markers} center={this.state.center} />
       </FullScreenContainer>
     );

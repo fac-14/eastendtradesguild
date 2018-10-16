@@ -1,4 +1,6 @@
+/* style text for map icons */
 .price-icon {
+  font-family: 'Avenir', 'Helvetica', 'Arial', sans-serif;
   text-align: center;
   font-weight: bold;
   border-radius: 50%;
@@ -7,4 +9,10 @@
   background: transparent;
   width: 32px;
   height: 32px;
+}
+/* move zoom control out from under header */
+.leaflet-control-zoom {
+  position: fixed;
+  top: 52px;
+  right: 8px;
 }
