@@ -1,16 +1,25 @@
 import React, { Component } from "react";
 import Map from "./Map";
 import PostcodeForm from "./PostcodeForm";
+import styled from "styled-components";
+import Landing from "./Landing";
+import Header from "./Header";
+
+const FullScreenContainer = styled.div.attrs({
+  className: "vh-100 vw-100 near-black avenir"
+})``;
 
 class App extends Component {
   state = {
     response: "",
-    markers: [],
+    markers: false,
+    loaded: false,
     postcode: "",
-    center: [] || ""
+    center: [51.564162, -0.107777] || ""
   };
 
   componentDidMount() {
+    this.showLoadingScreen();
     this.callApi()
       .then(res => {
         this.setState({ markers: res });
@@ -57,25 +66,45 @@ class App extends Component {
   //Conditional Map render on location
 
   handleUserLocation = arr => {
-    if (arr.length === 2) {
-      console.log("Hello");
-      return <Map markers={this.state.markers} center={this.state.center} />;
-    }
-    return (
-      <PostcodeForm
-        onSubmit={this.handleSubmit}
-        postcode={this.state.postcode}
-        center={this.state.center}
-        onChange={this.handleChange}
-      />
-    );
+    // if (arr.length === 2) {
+    // console.log("Hello");
+    return <Map markers={this.state.markers} center={this.state.center} />;
+    // }
+    // return (
+    //   <PostcodeForm
+    //     onSubmit={this.handleSubmit}
+    //     postcode={this.state.postcode}
+    //     center={this.state.center}
+    //     onChange={this.handleChange}
+    //   />
+    // );
   };
 
-  render = () => {
-    return (
-      <div className="App">{this.handleUserLocation(this.state.center)}</div>
-    );
+  //
+  showLoadingScreen = () => {
+    const loadingTime = 2000;
+    setTimeout(() => this.setState({ loaded: true }), loadingTime);
   };
+
+  render() {
+    const { loaded, markers, center } = this.state;
+    return (
+      <FullScreenContainer>
+        {(!loaded || !markers) && <Landing />}
+        <Header />
+        {markers &&
+          loaded && (
+            <Map markers={this.state.markers} center={this.state.center} />
+          )}
+      </FullScreenContainer>
+    );
+  }
 }
+//   render = () => {
+//     return (
+//       <div className="App">{this.handleUserLocation(this.state.center)}</div>
+//     );
+//   };
+// }
 
 export default App;
