@@ -8,10 +8,6 @@ const FullScreenContainer = styled.div.attrs({
   className: 'vh-100 vw-100 near-black avenir',
 })``;
 
-const ModalContainer = styled.div.attrs({
-  className: 'vh-100 vw-100 near-black avenir fixed top-0 left-0 z-999',
-})``;
-
 class App extends Component {
   state = {
     markers: false,
@@ -44,7 +40,7 @@ class App extends Component {
   };
 
   render() {
-    const { loaded, markers, modal } = this.state;
+    const { loaded, markers } = this.state;
     return (
       <React.Fragment>
         <FullScreenContainer>
@@ -52,11 +48,7 @@ class App extends Component {
           <Header />
           {markers &&
             loaded && (
-              <Map
-                modal={this.state.modal}
-                markers={this.state.markers}
-                center={this.state.center}
-              />
+              <Map markers={this.state.markers} center={this.state.center} />
             )}
         </FullScreenContainer>
       </React.Fragment>

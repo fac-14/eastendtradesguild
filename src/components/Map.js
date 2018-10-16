@@ -41,13 +41,11 @@ const Pill = styled.div.attrs({
 })``;
 
 const MarkerWithPopup = ({
-  name,
   geolocation,
   postcode,
   address,
   price_sqft,
   use_class,
-  clickFunction,
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   return (
