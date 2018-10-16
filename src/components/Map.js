@@ -4,6 +4,7 @@ import { Map, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import Icon from './MarkerIcon';
 import L from 'leaflet';
+import styled from 'styled-components';
 import './Map.css';
 
 type Props = {|
@@ -23,6 +24,22 @@ const iconSelect = useClass =>
     html: ReactDOMServer.renderToString(<Icon useClass={useClass} />),
   });
 
+const PopupLabel = styled.div.attrs({
+  className: 'b mb1',
+})``;
+
+const PopupInfo = styled.div.attrs({
+  className: 'mb1',
+})``;
+
+const CenteredSection = styled.div.attrs({
+  className: 'w-100 tc',
+})``;
+
+const Pill = styled.div.attrs({
+  className: 'f6 br-pill ph3 pv2 mb2 dib white bg-hot-pink ml-auto mr-auto',
+})``;
+
 const MarkerWithPopup = ({
   name,
   geolocation,
@@ -34,20 +51,22 @@ const MarkerWithPopup = ({
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   return (
-    <Marker
-      position={JSON.parse(geolocation)}
-      icon={iconSelect(use_class)}
-      onClick={() => console.log(address)}
-    >
-      {/* <Popup offset={[33, 15]}>
-        <ul>
-          <li>{address}</li>
-          <li>{postcode}</li>
-          <li>£{price} /sqft</li>
-          <li>{use_class}</li>
-          <li onClick={() => console.log('clicked')}>See More</li>
-        </ul>
-      </Popup> */}
+    <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
+      <Popup offset={[33, 15]}>
+        <div className="pa0 avenir f5 tl mw5">
+          <PopupLabel>Address:</PopupLabel>
+          <PopupInfo>
+            {address}, {postcode}
+          </PopupInfo>
+          <PopupLabel>Use Class:</PopupLabel>
+          <PopupInfo>
+            <Pill>{use_class}</Pill>
+          </PopupInfo>
+          <CenteredSection>
+            <Pill>£{price} /sqft</Pill>
+          </CenteredSection>
+        </div>
+      </Popup>
       <Tooltip
         offset={[-20, -25]}
         className="price-icon avenir"
@@ -96,11 +115,6 @@ export default props => {
       >
         <Markers markers={props.markers} />
       </MarkerClusterGroup>
-      {props.modal && (
-        <div className="w-90 h-75 pt5 ph2 bg-dark-pink fixed top0 left0 z-999">
-          hello
-        </div>
-      )}
     </Map>
   );
 };
