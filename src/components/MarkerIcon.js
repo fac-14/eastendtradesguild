@@ -1,25 +1,24 @@
-import React from "react";
+import React from 'react';
 
 export default ({ useClass }) => {
-
   const useClassColor = {
-    "A1": "#ff80cc",
-    "A3": "#9eebcf",
-    "B1": "#96ccff",
-    "B2": "#fbf1a9",
-    "B8": "#ffb700",
-    "D1": "#a463f2",
-    "D2": "#ff6300",
-    "Other": "#fff"
-  }
+    A1: '#ff80cc',
+    A3: '#9eebcf',
+    B1: '#96ccff',
+    B2: '#fbf1a9',
+    B8: '#ffb700',
+    D1: '#a463f2',
+    D2: '#ff6300',
+    Other: '#fff',
+  };
 
   return (
     <svg
-      width="70px"
-      height="70px"
+      width="80px"
+      height="80px"
       viewBox="0 0 42 42"
       className="donut"
-      aria-labelledby="beers-title beers-desc"
+      aria-labelledby="location label"
       role="img"
     >
       <circle
@@ -41,4 +40,4 @@ export default ({ useClass }) => {
       />
     </svg>
   );
-}
+};
