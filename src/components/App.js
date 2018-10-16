@@ -15,7 +15,8 @@ class App extends Component {
     markers: false,
     loaded: false,
     postcode: "",
-    center: [51.564162, -0.107777] || ""
+    center: [],
+    postcodeInv: false
   };
 
   componentDidMount() {
@@ -55,32 +56,38 @@ class App extends Component {
       .then(json => this.createLatLongArr(json))
       .then(array => this.setState({ center: array }));
   };
-
+  // Check if status code is 404 --> if so return error string and if not create lat long array
   createLatLongArr = object => {
     if (object.status === 404) {
-      return object.error;
-    }
+      this.setState({ postcodeInv: true })
+      return defaultLocation
+    } this.setState({ postcodeInv: false })
     return [Object.values(object.result)[7], Object.values(object.result)[6]];
   };
 
-  //Conditional Map render on location
+  handleInvalidPostcode = () => {
+    if (this.state.postcodeInv) {
+      return 'please enter a valid postcode'
+    }
+  }
 
+  //Conditional Map render on location
   handleUserLocation = arr => {
-    // if (arr.length === 2) {
-    // console.log("Hello");
+    if (arr.length === 0) {
+      return (
+        <PostcodeForm
+          onSubmit={this.handleSubmit}
+          postcode={this.state.postcode}
+          center={this.state.center}
+          onChange={this.handleChange}
+          handleInvalidPostcode={this.handleInvalidPostcode}
+        />
+      );
+    }
     return <Map markers={this.state.markers} center={this.state.center} />;
-    // }
-    // return (
-    //   <PostcodeForm
-    //     onSubmit={this.handleSubmit}
-    //     postcode={this.state.postcode}
-    //     center={this.state.center}
-    //     onChange={this.handleChange}
-    //   />
-    // );
   };
 
-  //
+  // Loading Screen Function
   showLoadingScreen = () => {
     const loadingTime = 2000;
     setTimeout(() => this.setState({ loaded: true }), loadingTime);
@@ -94,7 +101,7 @@ class App extends Component {
         <Header />
         {markers &&
           loaded && (
-            <Map markers={this.state.markers} center={this.state.center} />
+            this.handleUserLocation(center)
           )}
       </FullScreenContainer>
     );
