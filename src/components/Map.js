@@ -30,26 +30,27 @@ const MarkerWithPopup = ({
   address,
   price_sqft,
   use_class,
+  clickFunction,
 }: Props) => (
   <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
     <Popup>
       <ul>
-        <li>{name}</li>
-        <li>{postcode}</li>
         <li>{address}</li>
-        <li>{price_sqft}</li>
+        <li>{postcode}</li>
+        <li>£{price_sqft} /sqft</li>
         <li>{use_class}</li>
+        <li onClick={() => console.log('clicked')}>See More</li>
       </ul>
     </Popup>
     <Tooltip
-      offset={[-24, -23]}
-      className="price-icon"
+      offset={[-20, -20]}
+      className="price-icon avenir tc w3"
       direction="center"
       opacity={1}
       permanent
     >
-      <div>£{price_sqft}</div>
-      <div>/sqft</div>
+      <div className="f6 b">£{price_sqft}</div>
+      <div className="f7 ml1">/sqft</div>
     </Tooltip>
   </Marker>
 );
@@ -59,6 +60,14 @@ const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
     <MarkerWithPopup key={key} {...props} />
   ));
   return <React.Fragment>{items}</React.Fragment>;
+};
+
+const createClusterCustomIcon = function(cluster) {
+  return L.divIcon({
+    html: `<span>${cluster.getChildCount()}</span>`,
+    className: 'f6 link dim br-pill w2 h2 pt2 dib white bg-dark-pink tc b',
+    iconSize: L.point(40, 40, true),
+  });
 };
 
 export default props => {
@@ -74,7 +83,10 @@ export default props => {
         attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <MarkerClusterGroup>
+      <MarkerClusterGroup
+        iconCreateFunction={createClusterCustomIcon}
+        spiderLegPolyLineOptions={{ opacity: 0 }}
+      >
         <Markers markers={props.markers} />
       </MarkerClusterGroup>
     </Map>

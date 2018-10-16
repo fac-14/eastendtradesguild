@@ -1,8 +1,5 @@
 /* style text for map icons */
 .price-icon {
-  font-family: 'Avenir', 'Helvetica', 'Arial', sans-serif;
-  text-align: center;
-  font-weight: bold;
   border-radius: 50%;
   box-shadow: none;
   border: none;
