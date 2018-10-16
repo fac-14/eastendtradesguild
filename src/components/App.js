@@ -10,10 +10,10 @@ const FullScreenContainer = styled.div.attrs({
 
 class App extends Component {
   state = {
-    response: '',
     markers: false,
     loaded: false,
     center: [51.564162, -0.107777],
+    modal: false,
   };
 
   componentDidMount() {
@@ -42,14 +42,16 @@ class App extends Component {
   render() {
     const { loaded, markers } = this.state;
     return (
-      <FullScreenContainer>
-        {(!loaded || !markers) && <Landing />}
-        <Header />
-        {markers &&
-          loaded && (
-            <Map markers={this.state.markers} center={this.state.center} />
-          )}
-      </FullScreenContainer>
+      <React.Fragment>
+        <FullScreenContainer>
+          {(!loaded || !markers) && <Landing />}
+          <Header />
+          {markers &&
+            loaded && (
+              <Map markers={this.state.markers} center={this.state.center} />
+            )}
+        </FullScreenContainer>
+      </React.Fragment>
     );
   }
 }
