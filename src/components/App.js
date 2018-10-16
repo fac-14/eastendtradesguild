@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-// import Map from "./Map";
+import Map from "./Map";
 import PostcodeForm from "./PostcodeForm";
 
 class App extends Component {
   state = {
     response: "",
     markers: [],
-    postcode: '',
-    center: [] || ''
+    postcode: "",
+    center: [] || ""
   };
 
   componentDidMount() {
@@ -27,42 +27,55 @@ class App extends Component {
     return body;
   };
 
-
   // FORM FUNCTIONS
 
   handleChange = event => {
     const value = event.target.value;
-    this.setState({ postcode: value })
-  }
+    this.setState({ postcode: value });
+  };
 
   handleSubmit = event => {
     event.preventDefault();
     const postcode = this.state.postcode;
-    this.apiCallGeo(postcode)
-  }
+    this.apiCallGeo(postcode);
+  };
 
   apiCallGeo = postcode => {
     fetch(`https://api.postcodes.io/postcodes/${postcode}`)
       .then(res => res.json())
       .then(json => this.createLatLongArr(json))
-      .then(array => this.setState({ center: array }))
-  }
+      .then(array => this.setState({ center: array }));
+  };
 
   createLatLongArr = object => {
     if (object.status === 404) {
-      return object.error
+      return object.error;
     }
-    return [Object.values(object.result)[6], Object.values(object.result)[7]]
-  }
+    return [Object.values(object.result)[7], Object.values(object.result)[6]];
+  };
+
+  //Conditional Map render on location
+
+  handleUserLocation = arr => {
+    if (arr.length === 2) {
+      console.log("Hello");
+      return <Map markers={this.state.markers} center={this.state.center} />;
+    }
+    return (
+      <PostcodeForm
+        onSubmit={this.handleSubmit}
+        postcode={this.state.postcode}
+        center={this.state.center}
+        onChange={this.handleChange}
+      />
+    );
+  };
 
   render = () => {
     return (
-      <div className="App">
-        {/* <Map markers={this.state.markers} center={this.state.center} /> */}
-        <PostcodeForm onSubmit={this.handleSubmit} postcode={this.state.postcode} center={this.state.center} onChange={this.handleChange} />
-      </div>
+      <div className="App">{this.handleUserLocation(this.state.center)}</div>
     );
-  }
+  };
 }
 
 export default App;
