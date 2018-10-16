@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import Map from "./Map";
+// import Map from "./Map";
+import PostcodeForm from "./PostcodeForm";
 
 class App extends Component {
   state = {
     response: "",
     markers: [],
+    centerPostcode: '',
     center: [51.564162, -0.107777]
   };
 
@@ -25,10 +27,11 @@ class App extends Component {
     return body;
   };
 
-  render() {
+  render = () => {
     return (
       <div className="App">
-        <Map markers={this.state.markers} center={this.state.center} />
+        {/* <Map markers={this.state.markers} center={this.state.center} /> */}
+        <PostcodeForm value={this.state.centerPostcode} />
       </div>
     );
   }
