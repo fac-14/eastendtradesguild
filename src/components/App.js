@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Landing from './Landing';
 import Header from './Header';
 import Map from './Map';
 
@@ -10,11 +11,13 @@ const FullScreenContainer = styled.div.attrs({
 class App extends Component {
   state = {
     response: '',
-    markers: [],
+    markers: false,
+    loaded: false,
     center: [51.564162, -0.107777],
   };
 
   componentDidMount() {
+    this.showLoadingScreen();
     this.callApi()
       .then(res => {
         this.setState({ markers: res });
@@ -31,11 +34,21 @@ class App extends Component {
     return body;
   };
 
+  showLoadingScreen = () => {
+    const loadingTime = 2000;
+    setTimeout(() => this.setState({ loaded: true }), loadingTime);
+  };
+
   render() {
+    const { loaded, markers } = this.state;
     return (
       <FullScreenContainer>
+        {(!loaded || !markers) && <Landing />}
         <Header />
-        <Map markers={this.state.markers} center={this.state.center} />
+        {markers &&
+          loaded && (
+            <Map markers={this.state.markers} center={this.state.center} />
+          )}
       </FullScreenContainer>
     );
   }
