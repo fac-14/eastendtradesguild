@@ -6,7 +6,7 @@ class App extends Component {
   state = {
     response: "",
     markers: [],
-    center: [51.564162, -0.107777]
+    center: []
   };
 
   componentDidMount() {
@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <div className="App">
         {/* <Map markers={this.state.markers} center={this.state.center} /> */}
-        <PostcodeForm />
+        <PostcodeForm geolocation={this.state.center} />
       </div>
     );
   }

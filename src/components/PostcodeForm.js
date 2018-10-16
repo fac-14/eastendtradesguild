@@ -12,7 +12,6 @@ export default class Form extends React.Component {
             .then(res => res.json())
             .then(json => this.createLatLongArr(json))
             .then(array => this.setState({ geolocation: array }))
-            .then(console.log(this.state.geolocation))
     }
 
     createLatLongArr = object => {
