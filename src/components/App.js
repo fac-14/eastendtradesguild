@@ -8,6 +8,7 @@ import Header from "./Header";
 const FullScreenContainer = styled.div.attrs({
   className: "vh-100 vw-100 near-black avenir"
 })``;
+const defaultLocation = [51.564162, -0.107777];
 
 class App extends Component {
   state = {
@@ -15,7 +16,7 @@ class App extends Component {
     markers: false,
     loaded: false,
     postcode: "",
-    center: [],
+    center: defaultLocation,
     postcodeInv: false
   };
 
@@ -29,7 +30,7 @@ class App extends Component {
         console.log(err);
       });
   }
-
+  // api call made to backend to fetch airtable object
   callApi = async () => {
     const response = await fetch("/api/get_locations");
     const body = await response.json();
@@ -39,11 +40,13 @@ class App extends Component {
 
   // FORM FUNCTIONS
 
+  // handle input value in postcode field and update state
   handleChange = event => {
     const value = event.target.value;
     this.setState({ postcode: value });
   };
 
+  // grab postcode and make api call to postcodesIo to get lat Long
   handleSubmit = event => {
     event.preventDefault();
     const postcode = this.state.postcode;
@@ -56,7 +59,10 @@ class App extends Component {
       .then(json => this.createLatLongArr(json))
       .then(array => this.setState({ center: array }));
   };
-  // Check if status code is 404 --> if so return error string and if not create lat long array
+
+  // function to create lat long array to update the center key in state
+  // Check if postcode exists or not depending on status code
+  // if status code 404 update status and keep center at default location, otherwise return lat long array
   createLatLongArr = object => {
     if (object.status === 404) {
       this.setState({ postcodeInv: true })
@@ -65,15 +71,17 @@ class App extends Component {
     return [Object.values(object.result)[7], Object.values(object.result)[6]];
   };
 
+  // if invalid postcode show div with message
   handleInvalidPostcode = () => {
     if (this.state.postcodeInv) {
       return 'please enter a valid postcode'
     }
   }
 
-  //Conditional Map render on location
+  //function to either render form or map
+  // if the center is default then render form to put in postcode
   handleUserLocation = arr => {
-    if (arr.length === 0) {
+    if (this.state.center === defaultLocation) {
       return (
         <PostcodeForm
           onSubmit={this.handleSubmit}
