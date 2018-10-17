@@ -109,7 +109,8 @@ export default props => {
       />
       <MarkerClusterGroup
         iconCreateFunction={createClusterCustomIcon}
-        spiderLegPolyLineOptions={{ opacity: 0 }}
+        spiderLegPolylineOptions={{ opacity: 0 }}
+        spiderfyDistanceMultiplier={2.2}
       >
         <Markers markers={props.markers} />
       </MarkerClusterGroup>
