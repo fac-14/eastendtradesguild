@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import Map from './Map';
-import PostcodeForm from './PostcodeForm';
-import styled from 'styled-components';
-import Landing from './Landing';
-import Header from './Header';
+import React, { Component } from "react";
+import styled from "styled-components";
+import Landing from "./Landing";
+import Header from "./Header";
+import Map from "./Map";
+import PostcodeForm from "./PostcodeForm";
 
 const FullScreenContainer = styled.div.attrs({
-  className: 'vh-100 vw-100 near-black avenir',
+  className: "vh-100 vw-100 near-black avenir"
 })``;
 
 const ModalContainer = styled.div.attrs({
   className:
-    'vh-100 w-100 fixed top-0 left-0 z-max flex items-center justify-center',
+    "vh-100 w-100 fixed top-0 left-0 z-max flex items-center justify-center"
 })``;
 
 const ModalOverlay = styled.div.attrs({
-  className: 'vh-100 w-100 fixed top-0 left-0 z-9999 o-70 bg-white',
+  className: "vh-100 w-100 fixed top-0 left-0 z-9999 o-70 bg-white"
 })``;
 
 class App extends Component {
   state = {
     markers: false,
     loaded: false,
-    searchInput: '',
+    searchInput: "",
     center: false,
-    showFormWarning: false,
+    showFormWarning: false
   };
 
   defaultLocation = [51.5197507, -0.0775895];
@@ -41,7 +41,7 @@ class App extends Component {
   }
   // api call made to backend to fetch airtable object
   callApi = async () => {
-    const response = await fetch('/api/get_locations');
+    const response = await fetch("/api/get_locations");
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
@@ -68,7 +68,7 @@ class App extends Component {
     event.preventDefault();
     const postcode = this.state.searchInput;
     if (postcode.length === 0) {
-      return this.setState({ showFormWarning: 'Please enter a postcode' });
+      return this.setState({ showFormWarning: "Please enter a postcode" });
     } else {
       this.apiCallGeo(postcode);
     }
@@ -86,13 +86,13 @@ class App extends Component {
   checkResponse = res => {
     if (res.status === 404) {
       return this.setState({
-        showFormWarning: 'Please enter a valid postcode',
-        center: false,
+        showFormWarning: "Please enter a valid postcode",
+        center: false
       });
     }
     const location = [
       Object.values(res.result)[7],
-      Object.values(res.result)[6],
+      Object.values(res.result)[6]
     ];
     return this.setState({ showFormWarning: false, center: location });
   };
