@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import logo from './assets/logo.png';
 // import burger from './assets/burger.png';
-import appTitle from './assets/app_title.png';
+// import appTitle from './assets/app_title.png';
 
 const MyHeader = styled.header.attrs({
   className:
@@ -10,16 +10,19 @@ const MyHeader = styled.header.attrs({
 })``;
 
 const HeaderLogo = styled.img.attrs({
-  className: 'h2 w2 pa1',
+  className: 'pt1 pl1',
+})`
+height: 40px
+width: 40px
+`;
+
+const HeaderTitle = styled.span.attrs({
+  className: 'f3 avenir',
 })``;
 
-const HeaderTitle = styled.img.attrs({
-  className: 'w-40 mw4',
+const BoldPink = styled.span.attrs({
+  className: 'fw7 dark-pink',
 })``;
-
-// const NavBurger = styled.img.attrs({
-//   className: 'pr2',
-// })``;
 
 const HeaderLink = styled.a.attrs({
   className: 'f6 mr1',
@@ -30,7 +33,12 @@ export default props => (
     <HeaderLink href="/">
       <HeaderLogo src={logo} alt="East End Trades Guild" />
     </HeaderLink>
-    <HeaderTitle src={appTitle} alt="Rent Check" />
-    <HeaderLink href="/about">About</HeaderLink>
+    <HeaderTitle>
+      RENT
+      <BoldPink>CHECK</BoldPink>
+    </HeaderTitle>
+    <HeaderLink href="#" onClick={props.openSearch}>
+      Search
+    </HeaderLink>
   </MyHeader>
 );
