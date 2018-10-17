@@ -4,7 +4,6 @@ import PostcodeForm from "./PostcodeForm";
 import styled from "styled-components";
 import Landing from "./Landing";
 import Header from "./Header";
-import Modal from 'react-responsive-modal';
 
 const FullScreenContainer = styled.div.attrs({
   className: "vh-100 vw-100 near-black avenir"
@@ -19,7 +18,7 @@ class App extends Component {
     postcode: "",
     center: defaultLocation,
     postcodeInv: false,
-    open: false
+    open: true
   };
 
   onOpenModal = () => {
@@ -95,15 +94,13 @@ class App extends Component {
       return (
         <div>
           <button className='ma5' onClick={this.onOpenModal}>Enter Postcode</button>
-          <Modal open={this.state.open} onClose={this.onCloseModal} center>
-            <PostcodeForm
-              onSubmit={this.handleSubmit}
-              postcode={this.state.postcode}
-              center={this.state.center}
-              onChange={this.handleChange}
-              handleInvalidPostcode={this.handleInvalidPostcode}
-            />
-          </Modal>
+          <PostcodeForm
+            onSubmit={this.handleSubmit}
+            postcode={this.state.postcode}
+            center={this.state.center}
+            onChange={this.handleChange}
+            handleInvalidPostcode={this.handleInvalidPostcode}
+          />
         </div>
       );
     }
@@ -121,7 +118,7 @@ class App extends Component {
     return (
       <FullScreenContainer>
         {(!loaded || !markers) && <Landing />}
-        <Header onOpenModal={this.onOpenModal} />
+        <Header />
         {markers &&
           loaded && (
             this.handleUserLocation(center)
