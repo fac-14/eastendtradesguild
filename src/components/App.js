@@ -4,16 +4,18 @@ import PostcodeForm from "./PostcodeForm";
 import styled from "styled-components";
 import Landing from "./Landing";
 import Header from "./Header";
-//import { resolveCname } from "dns";
 
 const FullScreenContainer = styled.div.attrs({
   className: "vh-100 vw-100 near-black avenir"
 })``;
 
 const ModalContainer = styled.div.attrs({
-  className: "vh-100 vw-100 fixed top-0 left-0 bg-white z-max"
+  className: "vh-100 w-100 fixed top-0 left-0 z-max flex items-center justify-center"
 })``;
 
+const ModalOverlay = styled.div.attrs({
+  className: "vh-100 w-100 fixed top-0 left-0 z-9999 o-70 bg-white"
+})``;
 
 class App extends Component {
   state = {
@@ -22,18 +24,9 @@ class App extends Component {
     searchInput: "",
     center: false,
     showFormWarning: false,
-    open: true
   };
 
   defaultLocation = [51.5197507, -0.0775895];
-
-  openModal = () => {
-    this.setState({ open: true });
-  };
-
-  closeModal = () => {
-    this.setState({ open: false });
-  };
 
   componentDidMount() {
     this.showLoadingScreen();
@@ -58,14 +51,18 @@ class App extends Component {
   // handle input value in postcode field and update state
   handleChange = event => {
     const value = event.target.value;
-    this.setState({ searchInput: value });
+    this.setState({ searchInput: value, showFormWarning: false });
   };
 
   // grab postcode and make api call to postcodesIo to get lat Long
   handleSubmit = event => {
     event.preventDefault();
     const postcode = this.state.searchInput;
-    this.apiCallGeo(postcode);
+    if (postcode.length === 0) {
+      return this.setState({ showFormWarning: "Please enter a postcode" })
+    } else {
+      this.apiCallGeo(postcode);
+    }
   };
 
   apiCallGeo = postcode => {
@@ -124,7 +121,8 @@ class App extends Component {
               <Map markers={this.state.markers} center={this.state.center || this.defaultLocation} />
             )}
         </FullScreenContainer>
-        {loaded && markers && modal}
+        {loaded && markers && !center && <ModalOverlay />}
+        {loaded && markers && !center && modal}
       </React.Fragment>
     );
   }

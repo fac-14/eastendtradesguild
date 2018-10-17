@@ -7,12 +7,14 @@ const LargeCenteredImage = styled.img.attrs({
 })``;
 
 const Form = styled.form.attrs({
-  className: 'w5 center flex flex-column items-center justify-center avenir bg-yellow pa2 br3'
+  className: 'w5 center flex flex-column items-center justify-center avenir bg-white pa3 br3 o-100 tc'
 })``;
 
 const Button = styled.button.attrs({
   className: 'f6 grow no-underline br-pill ph3 pv2 mv2 dib white bg-hot-pink avenir button-reset b-none'
-})``;
+})`
+box-shadow: none
+border: none !important`;
 
 const Warning = styled.div.attrs({
   className: 'mv2 dark-pink'
@@ -22,9 +24,9 @@ export default class SearchForm extends Component {
   render() {
     let inputClasses;
     if (this.props.showWarning) {
-      inputClasses = 'mt2 dark-pink'
+      inputClasses = 'input-reset ba b--black-20 pa2 db mt2 dark-pink'
     } else {
-      inputClasses = 'mt2'
+      inputClasses = 'input-reset ba b--black-20 pa2 db mt2'
     }
     return (
       <Form onSubmit={this.props.onSubmit}>
