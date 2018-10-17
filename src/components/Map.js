@@ -38,7 +38,7 @@ const PopupInfo = styled.div.attrs({
 })``;
 
 const CenteredSection = styled.div.attrs({
-  className: "w-100 tc"
+  className: "w-100 tc bt bw1 pv3 mt3 ph2"
 })``;
 
 const Pill = styled.div.attrs({
@@ -93,11 +93,15 @@ const MarkerWithPopup = ({
           <PopupInfo>{break_clauses}</PopupInfo>
 
           <CenteredSection>
+            <PopupLabel>Was this useful?</PopupLabel>
+            <PopupInfo>
+              Help strengthen your community by adding your data
+            </PopupInfo>
             <a
               href={"https://airtable.com/shrE0QRpUy9UH8Bor"}
               target={"_blank"}
             >
-              <Pill>Contribute Info</Pill>
+              <Pill>Add my data</Pill>
             </a>
           </CenteredSection>
         </div>

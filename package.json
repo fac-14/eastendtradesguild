@@ -23,7 +23,7 @@
     "start": "node server.js",
     "start:server": "nodemon server.js",
     "start:client": "react-scripts start",
-    "dev": "npm run prestart && concurrently --kill-others-on-fail \"npm run start:server\" \"npm run start:client\"",
+    "dev": "npm run css && concurrently --kill-others-on-fail \"npm run start:server\" \"npm run start:client\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "css": "tachyons src/css/app.css > src/index.css --minify",
@@ -31,7 +31,6 @@
     "coverage": "codecov",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build",
-    "prestart": "npm run css",
     "prebuild": "npm run css"
   },
   "eslintConfig": {
