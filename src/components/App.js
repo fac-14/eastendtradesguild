@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import Landing from './Landing';
-import Header from './Header';
-import Map from './Map';
+import React, { Component } from "react";
+import styled from "styled-components";
+import Landing from "./Landing";
+import Header from "./Header";
+import Map from "./Map";
 
 const FullScreenContainer = styled.div.attrs({
-  className: 'vh-100 vw-100 near-black avenir',
+  className: "vh-100 vw-100 near-black avenir"
 })``;
 
 class App extends Component {
   state = {
     markers: false,
     loaded: false,
-    center: [51.564162, -0.107777],
-    modal: false,
+    center: [51.527098, -0.026635],
+    modal: false
   };
 
   componentDidMount() {
@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   callApi = async () => {
-    const response = await fetch('/api/get_locations');
+    const response = await fetch("/api/get_locations");
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
