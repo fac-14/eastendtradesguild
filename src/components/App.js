@@ -11,7 +11,7 @@ const FullScreenContainer = styled.div.attrs({
 })``;
 
 const ModalContainer = styled.div.attrs({
-  className: "vh-100 vw-100 fixed top-0 left-0 bg-hot-pink z-max"
+  className: "vh-100 vw-100 fixed top-0 left-0 bg-white z-max"
 })``;
 
 
