@@ -1,27 +1,28 @@
-import React, { Component } from "react";
-import Map from "./Map";
-import PostcodeForm from "./PostcodeForm";
-import styled from "styled-components";
-import Landing from "./Landing";
-import Header from "./Header";
+import React, { Component } from 'react';
+import Map from './Map';
+import PostcodeForm from './PostcodeForm';
+import styled from 'styled-components';
+import Landing from './Landing';
+import Header from './Header';
 
 const FullScreenContainer = styled.div.attrs({
-  className: "vh-100 vw-100 near-black avenir"
+  className: 'vh-100 vw-100 near-black avenir',
 })``;
 
 const ModalContainer = styled.div.attrs({
-  className: "vh-100 w-100 fixed top-0 left-0 z-max flex items-center justify-center"
+  className:
+    'vh-100 w-100 fixed top-0 left-0 z-max flex items-center justify-center',
 })``;
 
 const ModalOverlay = styled.div.attrs({
-  className: "vh-100 w-100 fixed top-0 left-0 z-9999 o-70 bg-white"
+  className: 'vh-100 w-100 fixed top-0 left-0 z-9999 o-70 bg-white',
 })``;
 
 class App extends Component {
   state = {
     markers: false,
     loaded: false,
-    searchInput: "",
+    searchInput: '',
     center: false,
     showFormWarning: false,
   };
@@ -40,13 +41,21 @@ class App extends Component {
   }
   // api call made to backend to fetch airtable object
   callApi = async () => {
-    const response = await fetch("/api/get_locations");
+    const response = await fetch('/api/get_locations');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
   };
 
   // FORM FUNCTIONS
+
+  openSearch = () => {
+    this.setState({ center: false });
+  };
+
+  closeSearch = () => {
+    this.setState({ center: this.defaultLocation });
+  };
 
   // handle input value in postcode field and update state
   handleChange = event => {
@@ -59,7 +68,7 @@ class App extends Component {
     event.preventDefault();
     const postcode = this.state.searchInput;
     if (postcode.length === 0) {
-      return this.setState({ showFormWarning: "Please enter a postcode" })
+      return this.setState({ showFormWarning: 'Please enter a postcode' });
     } else {
       this.apiCallGeo(postcode);
     }
@@ -68,7 +77,7 @@ class App extends Component {
   apiCallGeo = postcode => {
     fetch(`https://api.postcodes.io/postcodes/${postcode}`)
       .then(res => res.json())
-      .then(res => this.checkResponse(res))
+      .then(res => this.checkResponse(res));
   };
 
   // function to create lat long array to update the center key in state
@@ -76,12 +85,17 @@ class App extends Component {
   // if status code 404 update status and keep center at default location, otherwise return lat long array
   checkResponse = res => {
     if (res.status === 404) {
-      return this.setState({ showFormWarning: "Please enter a valid postcode", center: false })
+      return this.setState({
+        showFormWarning: 'Please enter a valid postcode',
+        center: false,
+      });
     }
-    const location = [Object.values(res.result)[7], Object.values(res.result)[6]];
-    return this.setState({ showFormWarning: false, center: location })
+    const location = [
+      Object.values(res.result)[7],
+      Object.values(res.result)[6],
+    ];
+    return this.setState({ showFormWarning: false, center: location });
   };
-
 
   //function to either render form or map
   // if the center is default then render form to put in postcode
@@ -109,15 +123,20 @@ class App extends Component {
 
   render() {
     const { loaded, markers, center } = this.state;
-    const modal = < ModalContainer>{this.showPostcodeSearch(center)}</ModalContainer>
+    const modal = (
+      <ModalContainer>{this.showPostcodeSearch(center)}</ModalContainer>
+    );
     return (
       <React.Fragment>
         <FullScreenContainer>
           {(!loaded || !markers) && <Landing />}
-          <Header />
+          <Header openSearch={this.openSearch} />
           {markers &&
             loaded && (
-              <Map markers={this.state.markers} center={this.state.center || this.defaultLocation} />
+              <Map
+                markers={this.state.markers}
+                center={this.state.center || this.defaultLocation}
+              />
             )}
         </FullScreenContainer>
         {loaded && markers && !center && <ModalOverlay />}
