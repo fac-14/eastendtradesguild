@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import logo from './assets/logo.png';
 
 const LargeCenteredImage = styled.img.attrs({
-  className: 'w4 h4 pv2 mb2',
+  className: 'w-40 w-70-m w-70-l pv2 mb2',
 })``;
 
 const Form = styled.form.attrs({

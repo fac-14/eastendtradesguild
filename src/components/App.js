@@ -92,7 +92,6 @@ class App extends Component {
           <PostcodeForm
             onSubmit={this.handleSubmit}
             postcode={this.state.searchInput}
-            center={this.defaultLocation}
             onChange={this.handleChange}
             showWarning={this.state.showFormWarning}
           />
