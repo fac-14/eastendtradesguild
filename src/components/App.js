@@ -4,28 +4,34 @@ import PostcodeForm from "./PostcodeForm";
 import styled from "styled-components";
 import Landing from "./Landing";
 import Header from "./Header";
+//import { resolveCname } from "dns";
 
 const FullScreenContainer = styled.div.attrs({
   className: "vh-100 vw-100 near-black avenir"
 })``;
-const defaultLocation = [51.564162, -0.107777];
+
+const ModalContainer = styled.div.attrs({
+  className: "vh-100 vw-100 fixed top-0 left-0 bg-hot-pink z-max"
+})``;
+
 
 class App extends Component {
   state = {
-    response: "",
     markers: false,
     loaded: false,
-    postcode: "",
-    center: defaultLocation,
-    postcodeInv: false,
+    searchInput: "",
+    center: false,
+    showFormWarning: false,
     open: true
   };
 
-  onOpenModal = () => {
+  defaultLocation = [51.5197507, -0.0775895];
+
+  openModal = () => {
     this.setState({ open: true });
   };
 
-  onCloseModal = () => {
+  closeModal = () => {
     this.setState({ open: false });
   };
 
@@ -52,59 +58,51 @@ class App extends Component {
   // handle input value in postcode field and update state
   handleChange = event => {
     const value = event.target.value;
-    this.setState({ postcode: value });
+    this.setState({ searchInput: value });
   };
 
   // grab postcode and make api call to postcodesIo to get lat Long
   handleSubmit = event => {
     event.preventDefault();
-    const postcode = this.state.postcode;
+    const postcode = this.state.searchInput;
     this.apiCallGeo(postcode);
   };
 
   apiCallGeo = postcode => {
     fetch(`https://api.postcodes.io/postcodes/${postcode}`)
       .then(res => res.json())
-      .then(json => this.createLatLongArr(json))
-      .then(array => this.setState({ center: array }));
+      .then(res => this.checkResponse(res))
   };
 
   // function to create lat long array to update the center key in state
   // Check if postcode exists or not depending on status code
   // if status code 404 update status and keep center at default location, otherwise return lat long array
-  createLatLongArr = object => {
-    if (object.status === 404) {
-      this.setState({ postcodeInv: true })
-      return defaultLocation
-    } this.setState({ postcodeInv: false })
-    return [Object.values(object.result)[7], Object.values(object.result)[6]];
+  checkResponse = res => {
+    if (res.status === 404) {
+      return this.setState({ showFormWarning: "Please enter a valid postcode", center: false })
+    }
+    const location = [Object.values(res.result)[7], Object.values(res.result)[6]];
+    return this.setState({ showFormWarning: false, center: location })
   };
 
-  // if invalid postcode show div with message
-  handleInvalidPostcode = () => {
-    if (this.state.postcodeInv) {
-      return 'please enter a valid postcode'
-    }
-  }
 
   //function to either render form or map
   // if the center is default then render form to put in postcode
-  handleUserLocation = arr => {
-    if (this.state.center === defaultLocation) {
+  showPostcodeSearch = arr => {
+    if (this.state.center === false) {
       return (
         <div>
-          <button className='ma5' onClick={this.onOpenModal}>Enter Postcode</button>
           <PostcodeForm
             onSubmit={this.handleSubmit}
-            postcode={this.state.postcode}
-            center={this.state.center}
+            postcode={this.state.searchInput}
+            center={this.defaultLocation}
             onChange={this.handleChange}
-            handleInvalidPostcode={this.handleInvalidPostcode}
+            showWarning={this.state.showFormWarning}
           />
         </div>
       );
     }
-    return <Map markers={this.state.markers} center={this.state.center} />;
+    //return <Map markers={this.state.markers} center={this.state.center} />;
   };
 
   // Loading Screen Function
@@ -115,15 +113,19 @@ class App extends Component {
 
   render() {
     const { loaded, markers, center } = this.state;
+    const modal = < ModalContainer>{this.showPostcodeSearch(center)}</ModalContainer>
     return (
-      <FullScreenContainer>
-        {(!loaded || !markers) && <Landing />}
-        <Header />
-        {markers &&
-          loaded && (
-            this.handleUserLocation(center)
-          )}
-      </FullScreenContainer>
+      <React.Fragment>
+        <FullScreenContainer>
+          {(!loaded || !markers) && <Landing />}
+          <Header />
+          {markers &&
+            loaded && (
+              <Map markers={this.state.markers} center={this.state.center || this.defaultLocation} />
+            )}
+        </FullScreenContainer>
+        {loaded && markers && modal}
+      </React.Fragment>
     );
   }
 }

@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 
 export default class Form extends Component {
-  // errorDiv = string => {
-  //   if (string === 'Invalid postcode') {
-  //     return "Please enter a valid postcode";
-  //   }
-  //   return "";
-  // };
   render() {
     return (
       <form className='pa7' onSubmit={this.props.onSubmit}>
@@ -19,7 +13,7 @@ export default class Form extends Component {
           onChange={this.props.onChange}
         />
         <button type="submit">Submit</button>
-        <div>{this.props.handleInvalidPostcode()}</div>
+        <div>{this.props.showWarning}</div>
       </form>
     );
   }
