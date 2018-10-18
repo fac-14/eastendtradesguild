@@ -29,7 +29,6 @@ const base = Airtable.base('apphdQNWTLdRQbOOg');
 
 const updateGeo = airtableResponse =>
   new Promise((resolve, reject) => {
-    console.log('updating Geo');
     if (airtableResponse.length === 0) {
       resolve(0);
     } else {
@@ -43,8 +42,7 @@ const updateGeo = airtableResponse =>
         // update airtable
         .then(updateMany)
         .then(resolve)
-        .catch(console.log);
-      console.log('geo updated');
+        .catch(console.error);
     }
   });
 
@@ -75,8 +73,13 @@ const updateAirtable = (id, fields) =>
 
 const updateMany = array =>
   new Promise((resolve, reject) => {
-    array.forEach(async row => await updateAirtable(row.id, row.fields));
-    resolve(true);
+    try {
+      array.forEach(async row => await updateAirtable(row.id, row.fields));
+      resolve(true);
+    } catch (err) {
+      console.error(err);
+      resolve(false);
+    }
   });
 
 module.exports = {
