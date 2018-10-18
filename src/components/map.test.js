@@ -3,7 +3,7 @@ import React from "react";
 import Map from "./Map";
 import { render, cleanup } from "react-testing-library";
 
-let markers = [
+const markers = [
   {
     key: 2,
     postcode: "N4 3HH",
@@ -25,6 +25,8 @@ let markers = [
     geolocation: "[51.564162,-0.107777]"
   }
 ];
+
+const wrongDate = "12/25/2018";
 
 it("Map renders without crashing", () => {
   render(<Map markers={markers} />);
