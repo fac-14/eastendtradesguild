@@ -1,50 +1,41 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import Landing from "./Landing";
-import Header from "./Header";
-import Map from "./Map";
-import PostcodeForm from "./PostcodeForm";
-
-const FullScreenContainer = styled.div.attrs({
-  className: "vh-100 vw-100 near-black avenir"
-})``;
-
-const ModalContainer = styled.div.attrs({
-  className:
-    "vh-100 w-100 fixed top-0 left-0 z-max flex items-center justify-center"
-})``;
-
-const ModalOverlay = styled.div.attrs({
-  className: "vh-100 w-100 fixed top-0 left-0 z-9999 o-70 bg-white"
-})``;
+import React, { Component } from 'react';
+import Landing from './Landing';
+import Header from './Header';
+import Map from './Map';
+import PostcodeForm from './PostcodeForm';
+import {
+  FullScreenContainer,
+  ModalContainer,
+  ModalOverlay,
+} from './App.styles';
 
 class App extends Component {
   state = {
     markers: false,
     loaded: false,
-    searchInput: "",
+    searchInput: '',
     center: false,
-    showFormWarning: false
+    showFormWarning: false,
   };
 
   defaultLocation = [51.5197507, -0.0775895];
 
   componentDidMount() {
     this.showLoadingScreen();
-    this.callApi()
-      .then(res => {
-        this.setState({ markers: res });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.callApi().catch(err => console.log(err));
   }
   // api call made to backend to fetch airtable object
   callApi = async () => {
-    const response = await fetch("/api/get_locations");
+    this.calledTimes = 0;
+    const response = await fetch('/api/get_locations');
     const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    return body;
+    if (response.status !== 200) console.error(body.message);
+    // if no results received, try again (make max 3 calls)
+    if (body.length > 0) {
+      this.setState({ markers: body });
+    } else if (this.calledTimes < 2) {
+      setTimeout(this.callApi, 5000);
+    }
   };
 
   // FORM FUNCTIONS
@@ -68,7 +59,7 @@ class App extends Component {
     event.preventDefault();
     const postcode = this.state.searchInput;
     if (postcode.length === 0) {
-      return this.setState({ showFormWarning: "Please enter a postcode" });
+      return this.setState({ showFormWarning: 'Please enter a postcode' });
     } else {
       this.apiCallGeo(postcode);
     }
@@ -86,13 +77,13 @@ class App extends Component {
   checkResponse = res => {
     if (res.status === 404) {
       return this.setState({
-        showFormWarning: "Please enter a valid postcode",
-        center: false
+        showFormWarning: 'Please enter a valid postcode',
+        center: false,
       });
     }
     const location = [
       Object.values(res.result)[7],
-      Object.values(res.result)[6]
+      Object.values(res.result)[6],
     ];
     return this.setState({ showFormWarning: false, center: location });
   };
