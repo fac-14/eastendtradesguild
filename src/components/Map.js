@@ -222,7 +222,7 @@ export default props => {
       >
         <Markers markers={props.markers} />
       </MarkerClusterGroup>
-      <MapLegend>Hello</MapLegend>
+      <MapLegend />
     </Map>
   );
 };
