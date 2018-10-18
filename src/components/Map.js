@@ -41,6 +41,9 @@ type MarkerData = {| ...Props, key: string |};
 
 // Date formatter //
 export function formatDate(input) {
+  if (input == undefined) {
+    return input;
+  }
   var datePart = input.match(/\d+/g),
     year = datePart[0].substring(2), // get only two digits
     month = datePart[1],
