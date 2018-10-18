@@ -26,6 +26,7 @@ class App extends Component {
     searchInput: "",
     center: false,
     showFormWarning: false,
+    legend: false,
     useClassColor: {
       A1: "#ff80cc",
       A3: "#9eebcf",
@@ -132,6 +133,11 @@ class App extends Component {
     setTimeout(() => this.setState({ loaded: true }), loadingTime);
   };
 
+  // toggle Legend
+  toggleLegend = () => {
+    this.setState({ legend: !this.state.legend })
+  }
+
   render() {
     const { loaded, markers, center } = this.state;
     const modal = (
@@ -148,6 +154,8 @@ class App extends Component {
                 markers={this.state.markers}
                 center={this.state.center || this.defaultLocation}
                 useColor={this.state.useClassColor}
+                toggleLegend={this.toggleLegend}
+                legend={this.state.legend}
               />
             )}
         </FullScreenContainer>

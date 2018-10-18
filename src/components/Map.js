@@ -99,7 +99,6 @@ const MarkerWithPopup = ({
   landlord_tenants_act
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-  console.log(MarkerWithPopup)
   return (
     <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
       <Popup
@@ -189,8 +188,6 @@ const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
   const items = markers.map(({ key, ...props }) => (
     <MarkerWithPopup key={key} {...props} />
   ));
-  console.log('markers', markers[0])
-  console.log('items', items)
   return <React.Fragment>{items}</React.Fragment>;
 };
 
@@ -222,7 +219,7 @@ export default props => {
       >
         <Markers markers={props.markers} />
       </MarkerClusterGroup>
-      <MapLegend />
+      <MapLegend toggleLegend={props.toggleLegend} legend={props.legend} />
     </Map>
   );
 };
