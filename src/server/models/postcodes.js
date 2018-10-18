@@ -6,7 +6,8 @@ const xhr = require('./utils/xhr');
 // getGeolocation - takes array of postcodes and queries postcodes.io API for geolocation
 //                  returns postcodes.io response (array of objects)
 // makeLatLngArray - takes response from postcodes.io and returns a 2-dimensional array with
-//                   lat and lng for each entry in the response.
+//                   lat and lng for each entry in the response. Where the input was not resolved
+//                   to valid geolocation data, the string 'invalid' will be used instead.
 
 const makePostcodeArray = inputArray => inputArray.map(entry => entry.postcode);
 
