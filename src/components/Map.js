@@ -113,6 +113,9 @@ const MarkerWithPopup = ({
             {address}, {postcode}
           </PopupInfo>
 
+          <PopupLabel>Landlord name</PopupLabel>
+          <PopupInfo>{landlord_name}</PopupInfo>
+
           <PopupLabel>Use Class: </PopupLabel>
           <PopupInfo>
             <Pill use_class={use_class}>{use_class}</Pill>
@@ -120,6 +123,12 @@ const MarkerWithPopup = ({
 
           <PopupLabel>Square Feet</PopupLabel>
           <PopupInfo>{square_feet}</PopupInfo>
+
+          <PopupLabel>Yard square feet</PopupLabel>
+          <PopupInfo>{yard_sqft}</PopupInfo>
+
+          <PopupLabel>Yard price /sqft</PopupLabel>
+          <PopupInfo>{yard_price_sqft}</PopupInfo>
 
           <PopupLabel>Lease Length</PopupLabel>
           <PopupInfo>{lease_length}</PopupInfo>
@@ -130,8 +139,20 @@ const MarkerWithPopup = ({
           <PopupLabel>Next rent review</PopupLabel>
           <PopupInfo>{date_of_next_rent_review}</PopupInfo>
 
+          <PopupLabel>Landlord tennants act</PopupLabel>
+          <PopupInfo>{landlord_tenants_act}</PopupInfo>
+
           <PopupLabel>Break Clause</PopupLabel>
           <PopupInfo>{break_clauses}</PopupInfo>
+
+          <PopupLabel>Restricted</PopupLabel>
+          <PopupInfo>{restricted}</PopupInfo>
+
+          <PopupLabel>Specification</PopupLabel>
+          <PopupInfo>{specification}</PopupInfo>
+
+          <PopupLabel>Additional comments</PopupLabel>
+          <PopupInfo>{additional_comments}</PopupInfo>
 
           <CenteredSection>
             <PopupLabel>Was this useful?</PopupLabel>
