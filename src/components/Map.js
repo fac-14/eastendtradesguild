@@ -9,19 +9,39 @@ import "./Map.css";
 
 type Props = {|
   name: string,
-  geolocation: string,
-  postcode: string,
-  address: string,
-  price_sqft: number,
-  use_class: string,
-  lease_length: string,
-  date_of_last_rent_review: number,
-  date_of_next_rent_review: number,
-  square_feet: number,
-  break_clauses: string
-|};
+    geolocation: string,
+      postcode: string,
+        address: string,
+          price_sqft: number,
+            use_class: string,
+              lease_length: string,
+                date_of_last_rent_review: number,
+                  date_of_next_rent_review: number,
+                    square_feet: number,
+                      break_clauses: string,
+                        useColor: object,
+                          annual_rent: number,
+                            yard_sqft: number,
+                              yard_price_sqft: number,
+                                restricted: string,
+                                  specification: string,
+                                    landlord_name: string,
+                                      additional_comments: string,
+                                        landlord_tenants_act: string
+                                          |};
 
 type MarkerData = {| ...Props, key: string |};
+
+const useClassColor = {
+  A1: "#ff80cc",
+  A3: "#9eebcf",
+  B1: "#96ccff",
+  B2: "#fbf1a9",
+  B8: "#ffb700",
+  D1: "#a463f2",
+  D2: "#ff6300",
+  Other: "#fff"
+};
 
 const iconSelect = useClass =>
   L.divIcon({
@@ -38,12 +58,25 @@ const PopupInfo = styled.div.attrs({
 })``;
 
 const CenteredSection = styled.div.attrs({
-  className: "w-100 tc bt bw1 pv3 mt3 ph2"
+  className: "center w-90 tc bt bw1 pv3 mt3 ph2"
 })``;
 
 const Pill = styled.div.attrs({
-  className: "f6 br-pill ph3 pv2 mb2 dib white bg-hot-pink ml-auto mr-auto"
-})``;
+  className: "f6 br-pill ph3 pv2 mb2 dib black b  ml-auto mr-auto"
+})`
+  background: ${props => useClassColor[props.use_class]};
+`;
+
+const Button = styled.a.attrs({
+  className:
+    "f6 grow no-underline br-pill ph3 pv2 mv2 dib link white bg-hot-pink avenir button-reset b-none"
+})`
+  color: white !important;
+`;
+
+// const Pill = styled.div.attrs({
+//   className: "f6 br-pill ph3 pv2 mb2 dib white bg-hot-pink ml-auto mr-auto"
+// })``;
 
 const MarkerWithPopup = ({
   geolocation,
@@ -55,9 +88,17 @@ const MarkerWithPopup = ({
   date_of_last_rent_review,
   date_of_next_rent_review,
   square_feet,
-  break_clauses
+  break_clauses,
+  yard_sqft,
+  yard_price_sqft,
+  restricted,
+  specification,
+  landlord_name,
+  additional_comments,
+  landlord_tenants_act
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  console.log(MarkerWithPopup)
   return (
     <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
       <Popup
@@ -67,42 +108,65 @@ const MarkerWithPopup = ({
         className={"popup"}
       >
         <div className="pa0 avenir f5 tl mw5">
-          <PopupLabel>Address:</PopupLabel>
+          {(address || postcode) &&
+            <PopupLabel>Address:</PopupLabel>}
           <PopupInfo>
             {address}, {postcode}
           </PopupInfo>
-
-          <PopupLabel>Use Class: </PopupLabel>
+          {(landlord_name) &&
+            <PopupLabel>Landlord name</PopupLabel>}
+          <PopupInfo>{landlord_name}</PopupInfo>
+          {(use_class) &&
+            <PopupLabel>Use Class: </PopupLabel>}
           <PopupInfo>
-            <Pill>{use_class}</Pill>
+            <Pill use_class={use_class}>{use_class}</Pill>
           </PopupInfo>
-
-          <PopupLabel>Square Feet</PopupLabel>
+          {(square_feet) &&
+            <PopupLabel>Square Feet</PopupLabel>}
           <PopupInfo>{square_feet}</PopupInfo>
-
-          <PopupLabel>Lease Length</PopupLabel>
+          {(yard_sqft) &&
+            <PopupLabel>Yard square feet</PopupLabel>}
+          <PopupInfo>{yard_sqft}</PopupInfo>
+          {(yard_price_sqft) &&
+            <PopupLabel>Yard price /sqft</PopupLabel>}
+          <PopupInfo>{yard_price_sqft}</PopupInfo>
+          {(lease_length) &&
+            <PopupLabel>Lease Length</PopupLabel>}
           <PopupInfo>{lease_length}</PopupInfo>
-
-          <PopupLabel>Last rent review</PopupLabel>
+          {(date_of_last_rent_review) &&
+            <PopupLabel>Last rent review</PopupLabel>}
           <PopupInfo>{date_of_last_rent_review}</PopupInfo>
-
-          <PopupLabel>Next rent review</PopupLabel>
+          {(date_of_next_rent_review) &&
+            <PopupLabel>Next rent review</PopupLabel>}
           <PopupInfo>{date_of_next_rent_review}</PopupInfo>
-
-          <PopupLabel>Break Clause</PopupLabel>
+          {(landlord_tenants_act) &&
+            <PopupLabel>Landlord tennants act</PopupLabel>}
+          <PopupInfo>{landlord_tenants_act}</PopupInfo>
+          {(break_clauses) &&
+            <PopupLabel>Break Clause</PopupLabel>}
           <PopupInfo>{break_clauses}</PopupInfo>
+          {(restricted) &&
+            <PopupLabel>Restricted</PopupLabel>}
+          <PopupInfo>{restricted}</PopupInfo>
+          {(specification) &&
+            <PopupLabel>Specification</PopupLabel>}
+          <PopupInfo>{specification}</PopupInfo>
+          {(additional_comments) &&
+            <PopupLabel>Additional comments</PopupLabel>}
+          <PopupInfo>{additional_comments}</PopupInfo>
 
           <CenteredSection>
             <PopupLabel>Was this useful?</PopupLabel>
             <PopupInfo>
               Help strengthen your community by adding your data
             </PopupInfo>
-            <a
+
+            <Button
               href={"https://airtable.com/shrE0QRpUy9UH8Bor"}
               target={"_blank"}
             >
-              <Pill>Add my data</Pill>
-            </a>
+              Add my data
+            </Button>
           </CenteredSection>
         </div>
       </Popup>
@@ -124,10 +188,12 @@ const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
   const items = markers.map(({ key, ...props }) => (
     <MarkerWithPopup key={key} {...props} />
   ));
+  console.log('markers', markers[0])
+  console.log('items', items)
   return <React.Fragment>{items}</React.Fragment>;
 };
 
-const createClusterCustomIcon = function(cluster) {
+const createClusterCustomIcon = function (cluster) {
   return L.divIcon({
     html: `<span>${cluster.getChildCount()}</span>`,
     className: "f6 link dim br-pill w2 h2 pt2 dib white bg-dark-pink tc b",
