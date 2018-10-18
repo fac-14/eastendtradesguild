@@ -41,7 +41,7 @@ type MarkerData = {| ...Props, key: string |};
 
 // Date formatter //
 export function formatDate(input) {
-  if (input == undefined) {
+  if (input === undefined) {
     return input;
   }
   var datePart = input.match(/\d+/g),
