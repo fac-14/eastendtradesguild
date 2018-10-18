@@ -29,7 +29,7 @@ const base = Airtable.base('apphdQNWTLdRQbOOg');
 
 const updateGeo = airtableResponse =>
   new Promise((resolve, reject) => {
-    console.log(updatingGeo);
+    console.log('updating Geo');
     if (airtableResponse.length === 0) {
       resolve(0);
     } else {
