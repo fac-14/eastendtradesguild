@@ -16,78 +16,16 @@ Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey,
 });
-
 const base = Airtable.base('apphdQNWTLdRQbOOg');
 
-const getNoGeo = () =>
-  new Promise((resolve, reject) => {
-    requestRows('no_geolocation', (array, record) => {
-      //if (record.fields.postcode != null) {
-      const postcodeIdObj = {
-        id: record.id,
-        postcode: record.fields.postcode,
-      };
-      array.push(postcodeIdObj);
-      // }
-    }).then(resolve);
-  });
-
-const isValidRow = ({
-  fields: {
-    postcode,
-    address,
-    price_sqft,
-    use_class,
-    date_of_last_rent_review,
-    geolocation,
-  },
-}) => {
-  if (
-    postcode &&
-    address &&
-    price_sqft &&
-    use_class &&
-    date_of_last_rent_review &&
-    geolocation != 'invalid'
-  ) {
-    return true;
-  }
-  return false;
-};
-
-const getAllValidRows = () =>
-  new Promise((resolve, reject) => {
-    requestRows('valid_records', (array, record) => {
-      if (isValidRow(record)) {
-        array.push(record.fields);
-      }
-    }).then(resolve);
-  });
-
-const requestRows = (view, cb) =>
-  new Promise((resolve, reject) => {
-    const outputArray = [];
-    base('fonthilldummy')
-      .select({
-        maxRecords: 1000,
-        pageSize: 100,
-        view,
-      })
-      .eachPage(
-        function page(records, fetchNextPage) {
-          // This function (`page`) will get called for each page of records.
-          records.forEach(record => {
-            cb(outputArray, record);
-          });
-          fetchNextPage();
-        },
-        function done(err) {
-          if (err) console.error(err);
-          // console.log(outputArray);
-          resolve(outputArray);
-        }
-      );
-  });
+// updateRecords :: Contents
+//
+// updateGeo - takes airtable response of records without geolocation (array of objects)
+//            and updates them with latitude and longitude - adds to Airtable
+// joinWithIds - used by updateGeo to join the airtable response object's IDs with the
+//             latitude and longitude retrieved from the postcodes.io API
+// updateAirtable - updates one row in Airtable, takes id and object of fields to update
+// updateMany - takes array of multiple records to update
 
 const updateGeo = airtableResponse =>
   new Promise((resolve, reject) => {
@@ -140,10 +78,8 @@ const updateMany = array =>
   });
 
 module.exports = {
-  getNoGeo,
   updateGeo,
-  getAllValidRows,
   joinWithIDs,
   updateAirtable,
-  requestRows,
+  updateMany,
 };

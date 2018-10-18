@@ -1,5 +1,5 @@
-const request = require('request');
-const { getNoGeo, updateGeo, getAllValidRows } = require('../models/table');
+const { getNoGeo, getAllValidRows } = require('../models/getRecords');
+const { updateGeo } = require('../models/updateRecords');
 
 module.exports = async (req, res) => {
   const rowsWithNoGeolocation = await getNoGeo();
