@@ -18,10 +18,30 @@ type Props = {|
   date_of_last_rent_review: number,
   date_of_next_rent_review: number,
   square_feet: number,
-  break_clauses: string
+  break_clauses: string,
+  useColor: object,
+  annual_rent: number,
+  yard_sqft: number,
+  yard_price_sqft: number,
+  restricted: string,
+  specification: string,
+  landlord_name: string,
+  additional_comments: string,
+  landlord_tenants_act: string
 |};
 
 type MarkerData = {| ...Props, key: string |};
+
+const useClassColor = {
+  A1: "#ff80cc",
+  A3: "#9eebcf",
+  B1: "#96ccff",
+  B2: "#fbf1a9",
+  B8: "#ffb700",
+  D1: "#a463f2",
+  D2: "#ff6300",
+  Other: "#fff"
+};
 
 const iconSelect = useClass =>
   L.divIcon({
@@ -38,12 +58,25 @@ const PopupInfo = styled.div.attrs({
 })``;
 
 const CenteredSection = styled.div.attrs({
-  className: "w-100 tc bt bw1 pv3 mt3 ph2"
+  className: "center w-90 tc bt bw1 pv3 mt3 ph2"
 })``;
 
 const Pill = styled.div.attrs({
-  className: "f6 br-pill ph3 pv2 mb2 dib white bg-hot-pink ml-auto mr-auto"
-})``;
+  className: "f6 br-pill ph3 pv2 mb2 dib black b  ml-auto mr-auto"
+})`
+  background: ${props => useClassColor[props.use_class]};
+`;
+
+const Button = styled.a.attrs({
+  className:
+    "f6 grow no-underline br-pill ph3 pv2 mv2 dib link white bg-hot-pink avenir button-reset b-none"
+})`
+  color: white !important;
+`;
+
+// const Pill = styled.div.attrs({
+//   className: "f6 br-pill ph3 pv2 mb2 dib white bg-hot-pink ml-auto mr-auto"
+// })``;
 
 const MarkerWithPopup = ({
   geolocation,
@@ -55,9 +88,17 @@ const MarkerWithPopup = ({
   date_of_last_rent_review,
   date_of_next_rent_review,
   square_feet,
-  break_clauses
+  break_clauses,
+  yard_sqft,
+  yard_price_sqft,
+  restricted,
+  specification,
+  landlord_name,
+  additional_comments,
+  landlord_tenants_act
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+
   return (
     <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
       <Popup
@@ -74,7 +115,7 @@ const MarkerWithPopup = ({
 
           <PopupLabel>Use Class: </PopupLabel>
           <PopupInfo>
-            <Pill>{use_class}</Pill>
+            <Pill use_class={use_class}>{use_class}</Pill>
           </PopupInfo>
 
           <PopupLabel>Square Feet</PopupLabel>
@@ -97,12 +138,13 @@ const MarkerWithPopup = ({
             <PopupInfo>
               Help strengthen your community by adding your data
             </PopupInfo>
-            <a
+
+            <Button
               href={"https://airtable.com/shrE0QRpUy9UH8Bor"}
               target={"_blank"}
             >
-              <Pill>Add my data</Pill>
-            </a>
+              Add my data
+            </Button>
           </CenteredSection>
         </div>
       </Popup>
