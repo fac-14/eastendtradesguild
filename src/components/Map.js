@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import MapLegend from "./Legend"
 import Icon from "./MarkerIcon";
 import L from "leaflet";
 import styled from "styled-components";
@@ -221,6 +222,7 @@ export default props => {
       >
         <Markers markers={props.markers} />
       </MarkerClusterGroup>
+      <MapLegend>Hello</MapLegend>
     </Map>
   );
 };

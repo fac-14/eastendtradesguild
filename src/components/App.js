@@ -18,6 +18,7 @@ const ModalOverlay = styled.div.attrs({
   className: "vh-100 w-100 fixed top-0 left-0 z-9999 o-70 bg-white"
 })``;
 
+
 class App extends Component {
   state = {
     markers: false,
@@ -150,8 +151,11 @@ class App extends Component {
               />
             )}
         </FullScreenContainer>
+
         {loaded && markers && !center && <ModalOverlay />}
         {loaded && markers && !center && modal}
+
+
       </React.Fragment>
     );
   }
