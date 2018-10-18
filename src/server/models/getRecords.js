@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 const Airtable = require('airtable');
 const {
   makePostcodeArray,
@@ -27,8 +25,6 @@ const base = Airtable.base('apphdQNWTLdRQbOOg');
 // getNoGeo - retrieve all records from Airtable which are missing geolocation
 // isValidRow - checks that row contains all the vital info to be displayed
 // getAllValidRows - retrieves all rows with valid data from Airtable
-// saveCached - takes the response of all valid data and caches as JSON
-// getCached - gets the cached data directly from the filesystem without external API call
 // requestRows - takes 2 arguments - airtable view and callback to be performed on
 //               each record.Returns an array of objects
 
@@ -67,43 +63,13 @@ const isValidRow = ({
   return false;
 };
 
-const saveCached = response =>
-  new Promise((resolve, reject) => {
-    fs.writeFile(
-      path.join(__dirname, 'cache', 'results.json'),
-      JSON.stringify(response),
-      err => {
-        if (err) {
-          console.error(err);
-          resolve(response);
-        } else {
-          resolve(response);
-        }
-      }
-    );
-  });
-
-const getCached = () =>
-  new Promise((resolve, reject) => {
-    fs.readFile(path.join(__dirname, 'cache', 'results.json'), (err, data) => {
-      if (err) {
-        console.error(err);
-        resolve({});
-      } else {
-        resolve(data);
-      }
-    });
-  });
-
 const getAllValidRows = () =>
   new Promise((resolve, reject) => {
     requestRows('valid_records', (array, record) => {
       if (isValidRow(record)) {
         array.push(record.fields);
       }
-    })
-      .then(saveCached)
-      .then(resolve);
+    }).then(resolve);
   });
 
 const requestRows = (view, cb) =>
@@ -135,5 +101,4 @@ module.exports = {
   getNoGeo,
   getAllValidRows,
   requestRows,
-  getCached,
 };
