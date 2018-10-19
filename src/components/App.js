@@ -18,13 +18,15 @@ const ModalOverlay = styled.div.attrs({
   className: "vh-100 w-100 fixed top-0 left-0 z-9999 o-70 bg-white"
 })``;
 
+
 class App extends Component {
   state = {
     markers: false,
     loaded: false,
     searchInput: "",
     center: false,
-    showFormWarning: false
+    showFormWarning: false,
+    legend: false,
   };
 
   defaultLocation = [51.5197507, -0.0775895];
@@ -112,7 +114,6 @@ class App extends Component {
         </div>
       );
     }
-    //return <Map markers={this.state.markers} center={this.state.center} />;
   };
 
   // Loading Screen Function
@@ -120,6 +121,11 @@ class App extends Component {
     const loadingTime = 2000;
     setTimeout(() => this.setState({ loaded: true }), loadingTime);
   };
+
+  // toggle Legend
+  toggleLegend = () => {
+    this.setState({ legend: !this.state.legend })
+  }
 
   render() {
     const { loaded, markers, center } = this.state;
@@ -137,11 +143,16 @@ class App extends Component {
                 markers={this.state.markers}
                 center={this.state.center || this.defaultLocation}
                 useColor={this.state.useClassColor}
+                toggleLegend={this.toggleLegend}
+                legend={this.state.legend}
               />
             )}
         </FullScreenContainer>
+
         {loaded && markers && !center && <ModalOverlay />}
         {loaded && markers && !center && modal}
+
+
       </React.Fragment>
     );
   }

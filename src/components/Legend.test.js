@@ -1,11 +1,11 @@
 const { render, cleanup } = require('react-testing-library');
 import React from 'react';
-import Map from './Map';
+import Legend from './Legend';
 
 afterAll(cleanup);
 
-describe('Map', () => {
+describe('Legend', () => {
     it('renders without crashing', () => {
-        render(<Map />);
+        render(<Legend />);
     });
 });

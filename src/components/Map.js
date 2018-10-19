@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Map, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import MapLegend from "./Legend"
 import Icon from "./MarkerIcon";
 import L from "leaflet";
 import {
@@ -16,27 +17,27 @@ import "./Map.css";
 
 type Props = {|
   name: string,
-  geolocation: string,
-  postcode: string,
-  address: string,
-  price_sqft: number,
-  use_class: string,
-  lease_length: string,
-  date_of_last_rent_review: number,
-  date_of_next_rent_review: number,
-  square_feet: number,
-  break_clauses: string,
-  useColor: object,
-  annual_rent: number,
-  yard_sqft: number,
-  yard_price_sqft: number,
-  restricted: string,
-  specification: string,
-  landlord_name: string,
-  additional_comments: string,
-  landlord_tenants_act: string,
-  service_charge: number
-|};
+    geolocation: string,
+      postcode: string,
+        address: string,
+          price_sqft: number,
+            use_class: string,
+              lease_length: string,
+                date_of_last_rent_review: number,
+                  date_of_next_rent_review: number,
+                    square_feet: number,
+                      break_clauses: string,
+                        useColor: object,
+                          annual_rent: number,
+                            yard_sqft: number,
+                              yard_price_sqft: number,
+                                restricted: string,
+                                  specification: string,
+                                    landlord_name: string,
+                                      additional_comments: string,
+                                        landlord_tenants_act: string,
+                                          service_charge: number
+                                            |};
 
 type MarkerData = {| ...Props, key: string |};
 
@@ -81,7 +82,6 @@ const MarkerWithPopup = ({
   service_charge
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-
   return (
     <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
       <Popup
@@ -182,7 +182,7 @@ const Markers = ({ markers }: { markers: Array<MarkerData> }) => {
   return <React.Fragment>{items}</React.Fragment>;
 };
 
-const createClusterCustomIcon = function(cluster) {
+const createClusterCustomIcon = function (cluster) {
   return L.divIcon({
     html: `<span>${cluster.getChildCount()}</span>`,
     className: "f6 link dim br-pill w2 h2 pt2 dib white bg-dark-pink tc b",
@@ -210,6 +210,7 @@ export default props => {
       >
         <Markers markers={props.markers} />
       </MarkerClusterGroup>
+      <MapLegend toggleLegend={props.toggleLegend} legend={props.legend} />
     </Map>
   );
 };
