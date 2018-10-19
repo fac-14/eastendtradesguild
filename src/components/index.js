@@ -1,5 +1,11 @@
-// import Map from './Map';
+const { render, cleanup } = require('react-testing-library');
+import React from 'react';
+import Map from './Map';
 
-// export default {
-//     Map
-// }
+afterAll(cleanup);
+
+describe('Map', () => {
+    it('renders without crashing', () => {
+        render(<Map />);
+    });
+});
