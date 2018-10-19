@@ -5,7 +5,14 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import MapLegend from "./Legend"
 import Icon from "./MarkerIcon";
 import L from "leaflet";
-import styled from "styled-components";
+import {
+  PopupInfo,
+  PopupLabel,
+  CenteredSection,
+  Pill,
+  Button
+} from "./map.styles";
+// import styled from "styled-components";
 import "./Map.css";
 
 type Props = {|
@@ -28,56 +35,31 @@ type Props = {|
                                   specification: string,
                                     landlord_name: string,
                                       additional_comments: string,
-                                        landlord_tenants_act: string
-                                          |};
+                                        landlord_tenants_act: string,
+                                          service_charge: number
+                                            |};
 
 type MarkerData = {| ...Props, key: string |};
 
-const useClassColor = {
-  A1: "#ff80cc",
-  A3: "#9eebcf",
-  B1: "#96ccff",
-  B2: "#fbf1a9",
-  B8: "#ffb700",
-  D1: "#a463f2",
-  D2: "#ff6300",
-  Other: "#fff"
-};
+// Date formatter //
+export function formatDate(input) {
+  if (input === undefined) {
+    return input;
+  }
+  var datePart = input.match(/\d+/g),
+    year = datePart[0].substring(2), // get only two digits
+    month = datePart[1],
+    day = datePart[2];
+
+  return day + "/" + month + "/" + year;
+}
+//
 
 const iconSelect = useClass =>
   L.divIcon({
     className: "custom-icon",
     html: ReactDOMServer.renderToString(<Icon useClass={useClass} />)
   });
-
-const PopupLabel = styled.div.attrs({
-  className: "b mb1"
-})``;
-
-const PopupInfo = styled.div.attrs({
-  className: "mb1"
-})``;
-
-const CenteredSection = styled.div.attrs({
-  className: "center w-90 tc bt bw1 pv3 mt3 ph2"
-})``;
-
-const Pill = styled.div.attrs({
-  className: "f6 br-pill ph3 pv2 mb2 dib black b  ml-auto mr-auto"
-})`
-  background: ${props => useClassColor[props.use_class]};
-`;
-
-const Button = styled.a.attrs({
-  className:
-    "f6 grow no-underline br-pill ph3 pv2 mv2 dib link white bg-hot-pink avenir button-reset b-none"
-})`
-  color: white !important;
-`;
-
-// const Pill = styled.div.attrs({
-//   className: "f6 br-pill ph3 pv2 mb2 dib white bg-hot-pink ml-auto mr-auto"
-// })``;
 
 const MarkerWithPopup = ({
   geolocation,
@@ -96,7 +78,8 @@ const MarkerWithPopup = ({
   specification,
   landlord_name,
   additional_comments,
-  landlord_tenants_act
+  landlord_tenants_act,
+  service_charge
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
   return (
@@ -108,51 +91,59 @@ const MarkerWithPopup = ({
         className={"popup"}
       >
         <div className="pa0 avenir f5 tl mw5">
-          {(address || postcode) &&
-            <PopupLabel>Address:</PopupLabel>}
+          {(address || postcode) && <PopupLabel>Address:</PopupLabel>}
           <PopupInfo>
             {address}, {postcode}
           </PopupInfo>
-          {(landlord_name) &&
-            <PopupLabel>Landlord name</PopupLabel>}
+
+          {landlord_name && <PopupLabel>Landlord name</PopupLabel>}
           <PopupInfo>{landlord_name}</PopupInfo>
-          {(use_class) &&
-            <PopupLabel>Use Class: </PopupLabel>}
+
+          {use_class && <PopupLabel>Use Class: </PopupLabel>}
           <PopupInfo>
             <Pill use_class={use_class}>{use_class}</Pill>
           </PopupInfo>
-          {(square_feet) &&
-            <PopupLabel>Square Feet</PopupLabel>}
+
+          {square_feet && <PopupLabel>Square Feet</PopupLabel>}
           <PopupInfo>{square_feet}</PopupInfo>
-          {(yard_sqft) &&
-            <PopupLabel>Yard square feet</PopupLabel>}
+
+          {yard_sqft && <PopupLabel>Yard square feet</PopupLabel>}
           <PopupInfo>{yard_sqft}</PopupInfo>
-          {(yard_price_sqft) &&
-            <PopupLabel>Yard price /sqft</PopupLabel>}
+
+          {yard_price_sqft && <PopupLabel>Yard price /sqft</PopupLabel>}
           <PopupInfo>{yard_price_sqft}</PopupInfo>
-          {(lease_length) &&
-            <PopupLabel>Lease Length</PopupLabel>}
+
+          {lease_length && <PopupLabel>Lease Length</PopupLabel>}
           <PopupInfo>{lease_length}</PopupInfo>
-          {(date_of_last_rent_review) &&
-            <PopupLabel>Last rent review</PopupLabel>}
-          <PopupInfo>{date_of_last_rent_review}</PopupInfo>
-          {(date_of_next_rent_review) &&
-            <PopupLabel>Next rent review</PopupLabel>}
-          <PopupInfo>{date_of_next_rent_review}</PopupInfo>
-          {(landlord_tenants_act) &&
-            <PopupLabel>Landlord tennants act</PopupLabel>}
+
+          {date_of_last_rent_review && (
+            <PopupLabel>Last rent review</PopupLabel>
+          )}
+          <PopupInfo>{formatDate(date_of_last_rent_review)}</PopupInfo>
+
+          {date_of_next_rent_review && (
+            <PopupLabel>Next rent review</PopupLabel>
+          )}
+          <PopupInfo>{formatDate(date_of_next_rent_review)}</PopupInfo>
+
+          {landlord_tenants_act && (
+            <PopupLabel>Landlord tennants act</PopupLabel>
+          )}
           <PopupInfo>{landlord_tenants_act}</PopupInfo>
-          {(break_clauses) &&
-            <PopupLabel>Break Clause</PopupLabel>}
+
+          {service_charge && <PopupLabel>Service charge</PopupLabel>}
+          <PopupInfo>£{service_charge}</PopupInfo>
+
+          {break_clauses && <PopupLabel>Break Clause</PopupLabel>}
           <PopupInfo>{break_clauses}</PopupInfo>
-          {(restricted) &&
-            <PopupLabel>Restricted</PopupLabel>}
+
+          {restricted && <PopupLabel>Restricted</PopupLabel>}
           <PopupInfo>{restricted}</PopupInfo>
-          {(specification) &&
-            <PopupLabel>Specification</PopupLabel>}
+
+          {specification && <PopupLabel>Specification</PopupLabel>}
           <PopupInfo>{specification}</PopupInfo>
-          {(additional_comments) &&
-            <PopupLabel>Additional comments</PopupLabel>}
+
+          {additional_comments && <PopupLabel>Additional comments</PopupLabel>}
           <PopupInfo>{additional_comments}</PopupInfo>
 
           <CenteredSection>
