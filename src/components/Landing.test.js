@@ -4,7 +4,7 @@ import Landing from './Landing';
 
 afterAll(cleanup);
 
-describe('Header', () => {
+describe('Landing', () => {
   it('renders without crashing', () => {
     render(<Landing />);
   });

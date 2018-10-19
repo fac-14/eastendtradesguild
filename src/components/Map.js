@@ -2,9 +2,17 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Map, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+import MapLegend from './Legend';
 import Icon from './MarkerIcon';
 import L from 'leaflet';
-import styled from 'styled-components';
+import {
+  PopupInfo,
+  PopupLabel,
+  CenteredSection,
+  Pill,
+  Button,
+} from './map.styles';
+// import styled from "styled-components";
 import './Map.css';
 
 type Props = {|
@@ -19,31 +27,39 @@ type Props = {|
   date_of_next_rent_review: number,
   square_feet: number,
   break_clauses: string,
+  useColor: object,
+  annual_rent: number,
+  yard_sqft: number,
+  yard_price_sqft: number,
+  restricted: string,
+  specification: string,
+  landlord_name: string,
+  additional_comments: string,
+  landlord_tenants_act: string,
+  service_charge: number,
 |};
 
 type MarkerData = {| ...Props, key: string |};
+
+// Date formatter //
+export function formatDate(input) {
+  if (input === undefined) {
+    return input;
+  }
+  var datePart = input.match(/\d+/g),
+    year = datePart[0].substring(2), // get only two digits
+    month = datePart[1],
+    day = datePart[2];
+
+  return day + '/' + month + '/' + year;
+}
+//
 
 const iconSelect = useClass =>
   L.divIcon({
     className: 'custom-icon',
     html: ReactDOMServer.renderToString(<Icon useClass={useClass} />),
   });
-
-const PopupLabel = styled.div.attrs({
-  className: 'b mb1',
-})``;
-
-const PopupInfo = styled.div.attrs({
-  className: 'mb1',
-})``;
-
-const CenteredSection = styled.div.attrs({
-  className: 'w-100 tc bt bw1 pv3 mt3 ph2',
-})``;
-
-const Pill = styled.div.attrs({
-  className: 'f6 br-pill ph3 pv2 mb2 dib white bg-hot-pink ml-auto mr-auto',
-})``;
 
 const MarkerWithPopup = ({
   geolocation,
@@ -56,6 +72,14 @@ const MarkerWithPopup = ({
   date_of_next_rent_review,
   square_feet,
   break_clauses,
+  yard_sqft,
+  yard_price_sqft,
+  restricted,
+  specification,
+  landlord_name,
+  additional_comments,
+  landlord_tenants_act,
+  service_charge,
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   return (
@@ -67,42 +91,73 @@ const MarkerWithPopup = ({
         className={'popup'}
       >
         <div className="pa0 avenir f5 tl mw5">
-          <PopupLabel>Address:</PopupLabel>
+          {(address || postcode) && <PopupLabel>Address:</PopupLabel>}
           <PopupInfo>
             {address}, {postcode}
           </PopupInfo>
 
-          <PopupLabel>Use Class: </PopupLabel>
+          {landlord_name && <PopupLabel>Landlord name</PopupLabel>}
+          <PopupInfo>{landlord_name}</PopupInfo>
+
+          {use_class && <PopupLabel>Use Class: </PopupLabel>}
           <PopupInfo>
-            <Pill>{use_class}</Pill>
+            <Pill use_class={use_class}>{use_class}</Pill>
           </PopupInfo>
 
-          <PopupLabel>Square Feet</PopupLabel>
+          {square_feet && <PopupLabel>Square Feet</PopupLabel>}
           <PopupInfo>{square_feet}</PopupInfo>
 
-          <PopupLabel>Lease Length</PopupLabel>
+          {yard_sqft && <PopupLabel>Yard square feet</PopupLabel>}
+          <PopupInfo>{yard_sqft}</PopupInfo>
+
+          {yard_price_sqft && <PopupLabel>Yard price /sqft</PopupLabel>}
+          <PopupInfo>{yard_price_sqft}</PopupInfo>
+
+          {lease_length && <PopupLabel>Lease Length</PopupLabel>}
           <PopupInfo>{lease_length}</PopupInfo>
 
-          <PopupLabel>Last rent review</PopupLabel>
-          <PopupInfo>{date_of_last_rent_review}</PopupInfo>
+          {date_of_last_rent_review && (
+            <PopupLabel>Last rent review</PopupLabel>
+          )}
+          <PopupInfo>{formatDate(date_of_last_rent_review)}</PopupInfo>
 
-          <PopupLabel>Next rent review</PopupLabel>
-          <PopupInfo>{date_of_next_rent_review}</PopupInfo>
+          {date_of_next_rent_review && (
+            <PopupLabel>Next rent review</PopupLabel>
+          )}
+          <PopupInfo>{formatDate(date_of_next_rent_review)}</PopupInfo>
 
-          <PopupLabel>Break Clause</PopupLabel>
+          {landlord_tenants_act && (
+            <PopupLabel>Landlord tennants act</PopupLabel>
+          )}
+          <PopupInfo>{landlord_tenants_act}</PopupInfo>
+
+          {service_charge && <PopupLabel>Service charge</PopupLabel>}
+          <PopupInfo>£{service_charge}</PopupInfo>
+
+          {break_clauses && <PopupLabel>Break Clause</PopupLabel>}
           <PopupInfo>{break_clauses}</PopupInfo>
+
+          {restricted && <PopupLabel>Restricted</PopupLabel>}
+          <PopupInfo>{restricted}</PopupInfo>
+
+          {specification && <PopupLabel>Specification</PopupLabel>}
+          <PopupInfo>{specification}</PopupInfo>
+
+          {additional_comments && <PopupLabel>Additional comments</PopupLabel>}
+          <PopupInfo>{additional_comments}</PopupInfo>
 
           <CenteredSection>
             <PopupLabel>Was this useful?</PopupLabel>
             <PopupInfo>
               Help strengthen your community by adding your data
             </PopupInfo>
-            <a
+
+            <Button
               href={'https://airtable.com/shrE0QRpUy9UH8Bor'}
               target={'_blank'}
             >
-              <Pill>Add my data</Pill>
-            </a>
+              Add my data
+            </Button>
           </CenteredSection>
         </div>
       </Popup>
@@ -155,6 +210,7 @@ export default props => {
       >
         <Markers markers={props.markers} />
       </MarkerClusterGroup>
+      <MapLegend toggleLegend={props.toggleLegend} legend={props.legend} />
     </Map>
   );
 };

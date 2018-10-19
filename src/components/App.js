@@ -16,6 +16,8 @@ class App extends Component {
     searchInput: '',
     center: [51.527329, -0.0554895],
     showFormWarning: false,
+    searchInput: '',
+    legend: false,
   };
 
   defaultLocation = [51.527329, -0.0554895];
@@ -105,13 +107,17 @@ class App extends Component {
         </div>
       );
     }
-    //return <Map markers={this.state.markers} center={this.state.center} />;
   };
 
   // Loading Screen Function
   showLoadingScreen = () => {
     const loadingTime = 2000;
     setTimeout(() => this.setState({ loaded: true }), loadingTime);
+  };
+
+  // toggle Legend
+  toggleLegend = () => {
+    this.setState({ legend: !this.state.legend });
   };
 
   render() {
@@ -129,9 +135,13 @@ class App extends Component {
               <Map
                 markers={this.state.markers}
                 center={this.state.center || this.defaultLocation}
+                useColor={this.state.useClassColor}
+                toggleLegend={this.toggleLegend}
+                legend={this.state.legend}
               />
             )}
         </FullScreenContainer>
+
         {loaded && markers && !center && <ModalOverlay />}
         {loaded && markers && !center && modal}
       </React.Fragment>
