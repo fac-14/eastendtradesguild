@@ -4,7 +4,7 @@ import PostcodeForm from './PostcodeForm';
 
 afterAll(cleanup);
 
-describe('Header', () => {
+describe('PostcodeForm', () => {
   let searchInput = '';
   it('renders without crashing', () => {
     render(<PostcodeForm
