@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from './assets/logo.png';
-// import burger from './assets/burger.png';
-// import appTitle from './assets/app_title.png';
 
 const MyHeader = styled.header.attrs({
   className:
@@ -25,7 +23,7 @@ const BoldPink = styled.span.attrs({
 })``;
 
 const HeaderLink = styled.a.attrs({
-  className: 'f6 mr1',
+  className: 'f6 mr1 z-max',
 })``;
 
 export default props => (

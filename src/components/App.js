@@ -14,16 +14,17 @@ class App extends Component {
     markers: false,
     loaded: false,
     searchInput: '',
-    center: false,
+    center: [51.527329, -0.0554895],
     showFormWarning: false,
   };
 
-  defaultLocation = [51.5197507, -0.0775895];
+  defaultLocation = [51.527329, -0.0554895];
 
   componentDidMount() {
     this.showLoadingScreen();
     this.callApi().catch(err => console.log(err));
   }
+
   // api call made to backend to fetch airtable object
   callApi = async () => {
     this.calledTimes = 0;
@@ -99,6 +100,7 @@ class App extends Component {
             postcode={this.state.searchInput}
             onChange={this.handleChange}
             showWarning={this.state.showFormWarning}
+            closeSearch={this.closeSearch}
           />
         </div>
       );
