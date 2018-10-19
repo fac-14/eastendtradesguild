@@ -1,9 +1,10 @@
 import React from "react";
 // import ReactDOM from "react-dom";
 import Map from "./Map";
+// import { formatDate } from "./Map";
 import { render, cleanup } from "react-testing-library";
 
-let markers = [
+const markers = [
   {
     key: 2,
     postcode: "N4 3HH",
@@ -26,6 +27,12 @@ let markers = [
   }
 ];
 
+const wrongDate = "12/25/2018";
+
 it("Map renders without crashing", () => {
   render(<Map markers={markers} />);
 });
+
+// test("Format date", () => {
+//   expect(formatDate(wrongDate)).toBe("25/12/2018");
+// });

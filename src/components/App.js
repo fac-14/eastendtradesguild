@@ -136,6 +136,7 @@ class App extends Component {
               <Map
                 markers={this.state.markers}
                 center={this.state.center || this.defaultLocation}
+                useColor={this.state.useClassColor}
               />
             )}
         </FullScreenContainer>
