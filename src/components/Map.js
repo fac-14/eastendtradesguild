@@ -34,7 +34,8 @@ type Props = {|
   specification: string,
   landlord_name: string,
   additional_comments: string,
-  landlord_tenants_act: string
+  landlord_tenants_act: string,
+  service_charge: number
 |};
 
 type MarkerData = {| ...Props, key: string |};
@@ -76,7 +77,8 @@ const MarkerWithPopup = ({
   specification,
   landlord_name,
   additional_comments,
-  landlord_tenants_act
+  landlord_tenants_act,
+  service_charge
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 
@@ -128,6 +130,9 @@ const MarkerWithPopup = ({
             <PopupLabel>Landlord tennants act</PopupLabel>
           )}
           <PopupInfo>{landlord_tenants_act}</PopupInfo>
+
+          {service_charge && <PopupLabel>Service charge</PopupLabel>}
+          <PopupInfo>£{service_charge}</PopupInfo>
 
           {break_clauses && <PopupLabel>Break Clause</PopupLabel>}
           <PopupInfo>{break_clauses}</PopupInfo>
