@@ -16,7 +16,6 @@ class App extends Component {
     searchInput: '',
     center: [51.527329, -0.0554895],
     showFormWarning: false,
-    searchInput: '',
     legend: false,
   };
 
