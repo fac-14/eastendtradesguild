@@ -10,8 +10,8 @@ const airtableAllValidRows = require('./json/airtable_all_valid_rows.json');
 const getMocks = {
   'https://api.postcodes.io/postcodes/e83fp': postcodeGetResponse,
   'https://api.github.com/users/arrested-developer': github,
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/fonthilldummy?maxRecords=1000&pageSize=100&view=no_geolocation': airtableNoGeo,
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/fonthilldummy?maxRecords=1000&pageSize=100&view=valid_records': airtableAllValidRows,
+  'https://api.airtable.com/v0/appZ5iPToPB60Mo0F/RENTCHECK?maxRecords=1000&pageSize=100&view=no_geolocation': airtableNoGeo,
+  'https://api.airtable.com/v0/appZ5iPToPB60Mo0F/RENTCHECK?maxRecords=1000&pageSize=100&view=valid_records': airtableAllValidRows,
 };
 
 const postMocks = {
@@ -24,9 +24,9 @@ const setStatus = {
 
 const setError = {
   'https://api.error.com': 'server error',
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/fonthilldummy/givemeanerror?':
+  'https://api.airtable.com/v0/appZ5iPToPB60Mo0F/RENTCHECK/givemeanerror?':
     'server error',
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/fonthilldummy?maxRecords=1000&pageSize=100&view=throw_error':
+  'https://api.airtable.com/v0/appZ5iPToPB60Mo0F/RENTCHECK?maxRecords=1000&pageSize=100&view=throw_error':
     'server error',
 };
 
