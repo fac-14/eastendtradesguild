@@ -127,7 +127,7 @@ const MarkerWithPopup = ({
           <PopupInfo>{formatDate(date_of_next_rent_review)}</PopupInfo>
 
           {landlord_tenants_act && (
-            <PopupLabel>Landlord tennants act</PopupLabel>
+            <PopupLabel>Landlord tenants act</PopupLabel>
           )}
           <PopupInfo>{landlord_tenants_act}</PopupInfo>
 
