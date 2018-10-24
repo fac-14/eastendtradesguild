@@ -18,7 +18,7 @@ Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey,
 });
-const base = Airtable.base('apphdQNWTLdRQbOOg');
+const base = Airtable.base('appZ5iPToPB60Mo0F');
 
 // getRecords :: Contents:
 
@@ -75,7 +75,7 @@ const getAllValidRows = () =>
 const requestRows = (view, cb) =>
   new Promise((resolve, reject) => {
     const outputArray = [];
-    base('fonthilldummy')
+    base('RENTCHECK')
       .select({
         maxRecords: 1000,
         pageSize: 100,

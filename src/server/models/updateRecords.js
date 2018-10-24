@@ -16,7 +16,7 @@ Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey,
 });
-const base = Airtable.base('apphdQNWTLdRQbOOg');
+const base = Airtable.base('appZ5iPToPB60Mo0F');
 
 // updateRecords :: Contents
 //
@@ -62,7 +62,7 @@ const joinWithIDs = (airtableResponse, postcodeResponse) =>
 
 const updateAirtable = (id, fields) =>
   new Promise((resolve, reject) => {
-    base('fonthilldummy').update(id, fields, function(err, record) {
+    base('RENTCHECK').update(id, fields, function(err, record) {
       if (err) {
         console.error('error with Airtable module: ', err);
         resolve(false);
