@@ -7,9 +7,9 @@
 
 > FAC 14 Client Project by Michael Simon and Armand
 
-The EETG is an alliance  of 250 small independent businesses and the self employed. As well as offering goods and services members provide social spaces, sustaining relationships between neighbours and making our streets safer and better places to be.
+The EETG is an alliance  of 250 small independent businesses and the self employed. As well as offering goods and services members provide social spaces, sustaining relationships between neighbours and making East London's streets safer and better places to be.
 
-Our initial MVP is an interactive map. It will help local businesses to view and input data about commercial property rents. The aim is to empower independent businesses in times of skyrocketing business rent increases. 
+Our initial MVP is an interactive map. It will help local businesses to view and input data about commercial property rents in their neighbourhood. The aim is to empower independent businesses in times of skyrocketing business rent increases. 
 
 ### Main Tech Stack
 
