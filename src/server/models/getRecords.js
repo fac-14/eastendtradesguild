@@ -18,7 +18,7 @@ Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey,
 });
-const base = Airtable.base('appZ5iPToPB60Mo0F');
+const base = Airtable.base(process.env.AIRTABLE_BASE);
 
 // getRecords :: Contents:
 
