@@ -36,7 +36,7 @@ The project is hosted on the free tier of Heroku. The limitation of this is that
 
 ### Requirements
 
-This app uses an Airtable base as CMS - you will need to have a base set up with the following columns of data:
+This app uses an Airtable base as CMS - you will need to have a base set up with the following columns of data. You should name the table RENTCHECK. The name of the base shouldn't matter.
 
   - `key` (serial ID column)
   - `address` (short text)
@@ -67,11 +67,12 @@ This app uses an Airtable base as CMS - you will need to have a base set up with
 - `npm install`
 - Create a `.env` file in the root
 - Add environment variable AIRTABLE_API_KEY with your own Airtable API key
+- Add environment variable AIRTABLE_BASE with the base id (a string of characters, can be found in the Airtable API docs)
 - `npm run dev` to run locally
 
 ### Tests
 
-Testing is done with Jest. Server controllers and models all have corresponding tests. Front end testing is less thorough, however many components have at least smoke tests written.
+Testing is done with Jest. Server controllers and models all have corresponding tests. Front end testing is less thorough, however many components have at least smoke tests written. The Airtable module's calls have been mocked for tests by mocking the `request` module. If you change the Airtable base, you may need to rewrite the mock.
 
 ### Contributing
 
